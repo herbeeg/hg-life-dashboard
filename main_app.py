@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 
 import main.main_menu as main
 

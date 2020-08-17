@@ -11,6 +11,28 @@ class MainApp(tk.Frame):
         self.main.pack()
         self.pack()
 
+    def load_view(self, view = 'menu'):
+        self.clear_view()
+
+        if 'menu' == view:
+            self.main = main.MainMenu(self)
+            self.main.pack()
+        elif 'budget' == view:
+            self.budget = ''
+        elif 'xeffect' == view:
+            self.xeffect = ''
+        elif 'goals' == view:
+            self.goals = ''
+        elif 'schedule' == view:
+            self.schedule = ''
+        elif 'journal' == view:
+            self.journal = ''
+
+
+    def clear_view(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+
 if '__main__' == __name__:
     root = tk.Tk()
     root.title('Life Dashboard')

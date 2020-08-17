@@ -1,4 +1,4 @@
-import tkinter as tks
+import tkinter as tk
 
 class MainMenu(tk.Frame):
     def __init__(self, master=None):
@@ -12,7 +12,7 @@ class MainMenu(tk.Frame):
 
     def create_widgets(self):
         self.budgets_open = tk.Button(self, padx=self.button_padding)
-        self.budgets_open['text'] = 'Budgets'
+        self.budgets_open['text'] = 'Budget'
         self.budgets_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
         self.xeffect_open = tk.Button(self, padx=self.button_padding)
@@ -24,7 +24,7 @@ class MainMenu(tk.Frame):
         self.goals_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
         self.schedules_open = tk.Button(self, padx=self.button_padding)
-        self.schedules_open['text'] = 'Schedules'
+        self.schedules_open['text'] = 'Schedule'
         self.schedules_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
         self.journal_open = tk.Button(self, padx=self.button_padding)

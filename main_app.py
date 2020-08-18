@@ -1,6 +1,7 @@
 import tkinter as tk
 
 import main.main_menu as main
+import journal.journal as journal
 
 class MainApp(tk.Frame):
     def __init__(self, master=None):
@@ -40,8 +41,8 @@ class MainApp(tk.Frame):
         elif 'journal' == view:
             self.master.title('Journal - ' + self.window_title)
 
-            self.journal = ''
-
+            self.journal = journal.Journal(self)
+            self.journal.pack()
 
     def clear_view(self):
         for widget in self.winfo_children():

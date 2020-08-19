@@ -65,18 +65,21 @@ class Journal(tk.Frame):
         filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Delete Journal', filetypes=[('Text Files', '*.txt')]))
 
         if filename:
-            filename += file_extension
+            confirm_choice = tk.messagebox.askyesno(title='Confirm Journal Deletion', message='Are you sure you want to delete this journal?')
 
-            try:
-                if '.txt' != file_extension:
-                    raise TypeError('Invalid file extension %s' % file_extension)
+            if True == confirm_choice:
+                filename += file_extension
 
-                if os.path.exists(filename):
-                    os.remove(filename)
-                else:
-                    raise IOError('Selected file does not exist.')
-            except Exception as ex:
-                tk.messagebox.showerror(title='Error Deleting Journal', message='Could not delete file %s' % filename)
+                try:
+                    if '.txt' != file_extension:
+                        raise TypeError('Invalid file extension %s' % file_extension)
+
+                    if os.path.exists(filename):
+                        os.remove(filename)
+                    else:
+                        raise IOError('Selected file does not exist.')
+                except Exception as ex:
+                    tk.messagebox.showerror(title='Error Deleting Journal', message='Could not delete file %s' % filename)
 
     def get_contents(self):
         return self.journal_input.get(1.0, 'end-1c')

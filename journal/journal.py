@@ -38,9 +38,14 @@ class Journal(tk.Frame):
         filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Edit Journal', filetypes=[('Text Files', '*.txt')]))
 
         if filename:
+            filename += file_extension
+
             try:
                 if '.txt' != file_extension:
                     raise TypeError('Invalid File Extension %s' % file_extension)
+
+                with open(filename, 'w+') as contents:
+                    self.refresh_text_input(contents)
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Journal', message='Unable to open file %s' % filename)
 
@@ -57,6 +62,10 @@ class Journal(tk.Frame):
 
     def get_contents(self):
         return self.journal_input.get(1.0, 'end-1c')
+
+    def refresh_text_input(self, content):
+        self.journal_input.delete(1.0, 'end-1c')
+        self.journal_input.insert(1.0, content)
 
     def update_status(self, text):
         self.journal_status['text'] = text

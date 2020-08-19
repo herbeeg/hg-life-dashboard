@@ -1,0 +1,5 @@
+Day 1
+
+This is an example journal entry to use during testing.
+
+Here's another thing I did that day with special characters!

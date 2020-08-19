@@ -44,7 +44,8 @@ class Journal(tk.Frame):
                 if '.txt' != file_extension:
                     raise TypeError('Invalid File Extension %s' % file_extension)
 
-                with open(filename, 'w+') as contents:
+                with open(filename, 'r+') as file:
+                    contents = file.read()
                     self.refresh_text_input(contents)
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Journal', message='Unable to open file %s' % filename)

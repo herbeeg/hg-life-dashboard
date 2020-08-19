@@ -18,7 +18,7 @@ class Journal(tk.Frame):
         self.journal_input = tk.Text(self, height=20, borderwidth=50)
         self.journal_input.pack(side='top', fill='both')
 
-        self.journal_delete = tk.Button(self, padx=self.button_padding)
+        self.journal_delete = tk.Button(self, padx=self.button_padding, command=self.delete_file)
         self.journal_delete['text'] = 'Delete'
         self.journal_delete.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
@@ -42,7 +42,7 @@ class Journal(tk.Frame):
 
             try:
                 if '.txt' != file_extension:
-                    raise TypeError('Invalid File Extension %s' % file_extension)
+                    raise TypeError('Invalid file extension %s' % file_extension)
 
                 with open(filename, 'r+') as file:
                     contents = file.read()
@@ -60,6 +60,23 @@ class Journal(tk.Frame):
             text_file.close()
 
             self.update_status('File Saved!')
+
+    def delete_file(self):
+        filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Delete Journal', filetypes=[('Text Files', '*.txt')]))
+
+        if filename:
+            filename += file_extension
+
+            try:
+                if '.txt' != file_extension:
+                    raise TypeError('Invalid file extension %s' % file_extension)
+
+                if os.path.exists(filename):
+                    os.remove(filename)
+                else:
+                    raise IOError('Selected file does not exist.')
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Deleting Journal', message='Could not delete file %s' % filename)
 
     def get_contents(self):
         return self.journal_input.get(1.0, 'end-1c')

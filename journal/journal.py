@@ -33,8 +33,11 @@ class Journal(tk.Frame):
     def save_file(self):
         filename = tk.filedialog.asksaveasfilename(title='Save Journal', filetypes=[('Text Files', '*.txt')])
 
-        contents = self.get_contents()
-        print(contents)
-
+        if filename:
+            text_file = open(filename, 'w+')
+            file_contents = self.get_contents()
+            text_file.write(file_contents)
+            text_file.close()
+        
     def get_contents(self):
         return self.journal_input.get(1.0, 'end-1c')

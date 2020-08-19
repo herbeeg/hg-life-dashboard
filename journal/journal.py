@@ -8,6 +8,7 @@ class Journal(tk.Frame):
 
         self.frame_padding = 5
         self.button_padding = 50
+        self.animation_delay = 1500
 
         self.create_widgets()
 
@@ -27,6 +28,10 @@ class Journal(tk.Frame):
         self.journal_load['text'] = 'Load'
         self.journal_load.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
+        self.journal_status = tk.Label(self, bg='#c9f6c9')
+        self.journal_status['text'] = ''
+        
+
     def pick_file(self):
         filename = tk.filedialog.askopenfilename(title='Select Journal', filetypes=[('Text Files', '*.txt')])
 
@@ -38,6 +43,22 @@ class Journal(tk.Frame):
             file_contents = self.get_contents()
             text_file.write(file_contents)
             text_file.close()
-        
+
+            self.update_status('File Saved!')
+
     def get_contents(self):
         return self.journal_input.get(1.0, 'end-1c')
+
+    def update_status(self, text):
+        self.journal_status['text'] = text
+        self.after(self.animation_delay, self.animate_status)
+        self.journal_status.pack(side='left', fill='x', expand=True, padx=self.frame_padding, pady=self.frame_padding)
+
+    def animate_status(self):
+        current_text = self.journal_status['text']
+
+        if 0 < len(current_text):
+            self.journal_status['text'] = current_text[:-1]
+            self.after(20, self.animate_status)
+        else:
+            self.journal_status.forget()

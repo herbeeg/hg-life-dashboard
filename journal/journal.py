@@ -1,5 +1,7 @@
 import tkinter.filedialog
+import tkinter.messagebox
 import tkinter as tk
+import os
 
 class Journal(tk.Frame):
     def __init__(self, master=None):
@@ -20,20 +22,27 @@ class Journal(tk.Frame):
         self.journal_delete['text'] = 'Delete'
         self.journal_delete.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
+        self.journal_edit = tk.Button(self, padx=self.button_padding, command=self.pick_file)
+        self.journal_edit['text'] = 'Edit'
+        self.journal_edit.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
+
         self.journal_save = tk.Button(self, padx=self.button_padding, command=self.save_file)
         self.journal_save['text'] = 'Save'
         self.journal_save.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
-
-        self.journal_load = tk.Button(self, padx=self.button_padding, command=self.pick_file)
-        self.journal_load['text'] = 'Load'
-        self.journal_load.pack(side='right', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
         self.journal_status = tk.Label(self, bg='#c9f6c9')
         self.journal_status['text'] = ''
         
 
     def pick_file(self):
-        filename = tk.filedialog.askopenfilename(title='Select Journal', filetypes=[('Text Files', '*.txt')])
+        filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Edit Journal', filetypes=[('Text Files', '*.txt')]))
+
+        if filename:
+            try:
+                if '.txt' != file_extension:
+                    raise TypeError('Invalid File Extension %s' % file_extension)
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Loading Journal', message='Unable to open file %s' % filename)
 
     def save_file(self):
         filename = tk.filedialog.asksaveasfilename(title='Save Journal', filetypes=[('Text Files', '*.txt')])

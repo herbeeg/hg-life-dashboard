@@ -95,12 +95,16 @@ class Journal(tk.Frame):
         filename = tk.filedialog.asksaveasfilename(title='Save Journal', filetypes=[('Text Files', '*.txt')])
 
         if filename:
-            text_file = open(filename, 'w+')
-            file_contents = self.get_contents()
-            text_file.write(file_contents)
-            text_file.close()
+            try:
+                with open(filename, 'w+') as text_file:
+                    file_contents = self.get_contents()
+                    text_file.write(file_contents)
+                    text_file.close()
 
-            self.update_status('File Saved!')
+                    self.update_status('File Saved!')
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Saving Journal', message='Unable to save file %s' % filename)
+            
 
     def delete_file(self):
         """

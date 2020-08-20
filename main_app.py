@@ -2,6 +2,7 @@ import tkinter as tk
 
 import main.main_menu as main
 import journal.journal as journal
+import xeffect.x_effect as xeffect
 
 from functools import partial
 
@@ -54,7 +55,9 @@ class MainApp(tk.Frame):
         elif 'xeffect' == view:
             self.master.title('X-Effect - ' + self.window_title)
             
-            self.xeffect = ''
+            self.xeffect = xeffect.XEffect(self)
+            self.xeffect.pack()
+            self.attach_back_button()
         elif 'goals' == view:
             self.master.title('Goal Setting - ' + self.window_title)
 
@@ -85,7 +88,7 @@ class MainApp(tk.Frame):
         element to the root frame and anchor it to
         the top-left of the window.
         """
-        self.menu_back = tk.Button(self.master, padx=10, pady=10, command=partial(self.load_view, 'menu'))
+        self.menu_back = tk.Button(self.master, padx=10, pady=5, command=partial(self.load_view, 'menu'))
         self.menu_back['text'] = '<-- Back'
         self.menu_back.pack()
         self.menu_back.place(anchor='nw', x=10)

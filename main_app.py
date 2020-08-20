@@ -3,6 +3,8 @@ import tkinter as tk
 import main.main_menu as main
 import journal.journal as journal
 
+from functools import partial
+
 class MainApp(tk.Frame):
     """
     Main container to provide a canvas for all 
@@ -44,6 +46,7 @@ class MainApp(tk.Frame):
 
             self.main = main.MainMenu(self)
             self.main.pack()
+            self.detach_back_button()
         elif 'budget' == view:
             self.master.title('Budget - ' + self.window_title)
 
@@ -65,6 +68,7 @@ class MainApp(tk.Frame):
 
             self.journal = journal.Journal(self)
             self.journal.pack()
+            self.attach_back_button()
 
     def clear_view(self):
         """
@@ -74,6 +78,26 @@ class MainApp(tk.Frame):
         """
         for widget in self.winfo_children():
             widget.destroy()
+
+    def attach_back_button(self):
+        """
+        Create a new, absolutely positioned back button
+        element to the root frame and anchor it to
+        the top-left of the window.
+        """
+        self.menu_back = tk.Button(self.master, padx=10, pady=10, command=partial(self.load_view, 'menu'))
+        self.menu_back['text'] = '<-- Back'
+        self.menu_back.pack()
+        self.menu_back.place(anchor='nw', x=10)
+
+    def detach_back_button(self):
+        """
+        As the back button is attached to the root
+        frame, the element will be destroyed
+        and re-created when necessary.
+        """
+        if None != self.menu_back:
+            self.menu_back.destroy()
 
 if '__main__' == __name__:
     """Setup root tkinter window."""

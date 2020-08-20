@@ -80,6 +80,8 @@ class Journal(tk.Frame):
                 with open(filename, 'r+') as file:
                     contents = file.read()
                     self.refresh_text_input(contents)
+
+                    self.update_status('File Loaded!')
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Journal', message='Unable to open file %s' % filename)
 
@@ -134,6 +136,8 @@ class Journal(tk.Frame):
 
                     if os.path.exists(filename):
                         os.remove(filename)
+
+                        self.update_status('File Deleted!')
                     else:
                         raise IOError('Selected file does not exist.')
                 except Exception as ex:

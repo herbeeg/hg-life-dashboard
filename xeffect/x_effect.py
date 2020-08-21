@@ -19,7 +19,13 @@ class XEffect(tk.Frame):
         return True
 
     def load_xeffect_data(self):
-        filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Load Data', filetypes=[('JSON Files', '*.json')]))
+        try:
+            filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Load Data', filetypes=[('JSON Files', '*.json')]))
+        except TypeError as ex:
+            tk.messagebox.showerror(title='Error Loading Data', message='No valid file selected')
+
+            self.master.load_view('menu')
+            return
 
         if filename:
             filename += file_extension
@@ -32,8 +38,6 @@ class XEffect(tk.Frame):
                     json_data = json.load(file)
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
-
-        return True
 
     def format_calendar_month(self, month):
         return True

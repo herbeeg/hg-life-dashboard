@@ -99,7 +99,7 @@ class MainApp(tk.Frame):
         frame, the element will be destroyed
         and re-created when necessary.
         """
-        if None != self.menu_back:
+        if hasattr(self, 'menu_back') and None != self.menu_back:
             self.menu_back.destroy()
 
 if '__main__' == __name__:

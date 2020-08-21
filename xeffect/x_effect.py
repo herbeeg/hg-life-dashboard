@@ -22,15 +22,16 @@ class XEffect(tk.Frame):
         print(widget_item)
 
         background_colour = widget_item['colour']
+        foreground_colour = '#ffffff'
 
-        title_label = tk.Label(self, bg=background_colour)
+        title_label = tk.Label(self, bg=background_colour, fg=foreground_colour)
         title_label['text'] = widget_item['title']
         title_label.grid(row=self.row_index, column=self.col_index)
 
         self.row_index += 1
 
         for data in widget_item['data']:
-            label = tk.Label(self, bg=background_colour)
+            label = tk.Label(self, bg=background_colour, fg=foreground_colour)
             label['text'] = data['title']
             label.grid(row=self.row_index, column=self.col_index)
 

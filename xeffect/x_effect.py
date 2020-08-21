@@ -11,13 +11,31 @@ class XEffect(tk.Frame):
         self.master = master
 
         self.data_directory = '/xeffect/data/'
+        self.row_index = 0
+        self.col_index = 0
 
         self.xeffect_data = self.load_xeffect_data()
 
         self.format_calendar_month(datetime.now().month)
-        self.create_widgets()
 
-    def create_widgets(self):
+    def create_widget(self, widget_item={}):
+        print(widget_item)
+
+        background_colour = widget_item['colour']
+
+        title_label = tk.Label(self, bg=background_colour)
+        title_label['text'] = widget_item['title']
+        title_label.grid(row=self.row_index, column=self.col_index)
+
+        self.row_index += 1
+
+        for data in widget_item['data']:
+            label = tk.Label(self, bg=background_colour)
+            label['text'] = data['title']
+            label.grid(row=self.row_index, column=self.col_index)
+
+            self.row_index += 1
+
         return True
 
     def load_xeffect_data(self):
@@ -42,6 +60,10 @@ class XEffect(tk.Frame):
 
                 with open(filename) as file:
                     json_data = json.load(file)
+
+                    for item in json_data['items']:
+                        self.create_widget(item)
+
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 

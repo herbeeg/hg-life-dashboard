@@ -1,3 +1,4 @@
+import tkinter.font
 import tkinter as tk
 import calendar
 import json
@@ -10,9 +11,16 @@ class XEffect(tk.Frame):
         super().__init__(master)
         self.master = master
 
+        self.title_label_font = tk.font.Font(family='TkDefaultFont', weight='bold')
+
         self.data_directory = '/xeffect/data/'
         self.row_index = 0
         self.col_index = 0
+
+        self.calendar = calendar.Calendar().itermonthdates(datetime.now().year, datetime.now().month)
+        self.formatted_month = '-' + str(datetime.now().month).zfill(2) + '-'
+
+        [x for x in self.calendar if self.formatted_month in str(x)]
 
         self.xeffect_data = self.load_xeffect_data()
 
@@ -24,7 +32,7 @@ class XEffect(tk.Frame):
         background_colour = widget_item['colour']
         foreground_colour = '#ffffff'
 
-        title_label = tk.Label(self, bg=background_colour, fg=foreground_colour)
+        title_label = tk.Label(self, bg=background_colour, fg=foreground_colour, font=self.title_label_font)
         title_label['text'] = widget_item['title']
         title_label.grid(row=self.row_index, column=self.col_index)
 

@@ -10,6 +10,8 @@ class XEffect(tk.Frame):
         super().__init__(master)
         self.master = master
 
+        self.data_directory = '/xeffect/data/'
+
         self.xeffect_data = self.load_xeffect_data()
 
         self.format_calendar_month(datetime.now().month)
@@ -20,12 +22,16 @@ class XEffect(tk.Frame):
 
     def load_xeffect_data(self):
         try:
-            filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Load Data', filetypes=[('JSON Files', '*.json')]))
-        except TypeError as ex:
-            tk.messagebox.showerror(title='Error Loading Data', message='No valid file selected')
+            with open(self.master.get_working_directory() + self.data_directory + 'ld_august_2020.json') as file:
+                filename, file_extension = os.path.splitext(file.name)
+        except FileNotFoundError:
+            try:
+                filename, file_extension = os.path.splitext(tk.filedialog.askopenfilename(title='Load Data', filetypes=[('JSON Files', '*.json')]))
+            except TypeError as ex:
+                tk.messagebox.showerror(title='Error Loading Data', message='No valid file selected')
 
-            self.master.load_view('menu')
-            return
+                self.master.load_view('menu')
+                return
 
         if filename:
             filename += file_extension

@@ -1,4 +1,5 @@
 import tkinter as tk
+import os
 
 import main.main_menu as main
 import journal.journal as journal
@@ -101,6 +102,9 @@ class MainApp(tk.Frame):
         """
         if hasattr(self, 'menu_back') and None != self.menu_back:
             self.menu_back.destroy()
+
+    def get_working_directory(self):
+        return os.getcwd()
 
 if '__main__' == __name__:
     """Setup root tkinter window."""

@@ -18,13 +18,11 @@ class XEffect(tk.Frame):
         self.col_index = 0
 
         self.calendar = calendar.Calendar().itermonthdates(datetime.now().year, datetime.now().month)
-        self.formatted_month = '-' + str(datetime.now().month).zfill(2) + '-'
+        self.search_date = str(datetime.now().year) + '-' + str(datetime.now().month).zfill(2) + '-'
 
-        [x for x in self.calendar if self.formatted_month in str(x)]
+        self.calendar = [x for x in self.calendar if str(x).startswith(self.search_date)]
 
         self.xeffect_data = self.load_xeffect_data()
-
-        self.format_calendar_month(datetime.now().month)
 
     def create_widget(self, widget_item={}):
         print(widget_item)
@@ -76,5 +74,5 @@ class XEffect(tk.Frame):
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
-    def format_calendar_month(self, month):
+    def print_calendar_dates(self, dates):
         return True

@@ -5,6 +5,7 @@ import json
 import os
 
 from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont, ImageTk
 
 class XEffect(tk.Frame):
     def __init__(self, master=None):
@@ -17,9 +18,8 @@ class XEffect(tk.Frame):
         self.row_index = 0
         self.col_index = 0
 
-        self.calendar = calendar.Calendar().itermonthdates(datetime.now().year, datetime.now().month)
         self.search_date = str(datetime.now().year) + '-' + str(datetime.now().month).zfill(2) + '-'
-
+        self.calendar = calendar.Calendar().itermonthdates(datetime.now().year, datetime.now().month)
         self.calendar = [x for x in self.calendar if str(x).startswith(self.search_date)]
 
         self.xeffect_data = self.load_xeffect_data()
@@ -68,11 +68,33 @@ class XEffect(tk.Frame):
                 with open(filename) as file:
                     json_data = json.load(file)
 
+                    self.print_calendar_dates(self.calendar)
+
                     for item in json_data['items']:
                         self.create_widget(item)
 
             except Exception as ex:
+                print(ex)
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
     def print_calendar_dates(self, dates):
-        return True
+        for date in dates:
+            label = tk.Label(self, image=self.generate_date_image(date))
+            label.grid(row=self.row_index, column=self.col_index)
+
+            self.col_index += 1
+
+        self.row_index += 1
+
+    def generate_date_image(self, text):
+        text = str(text)
+
+        image = Image.new(mode='RGB', size=(20,100), color=(0, 0, 0))
+        text_image = ImageDraw.Draw(image)
+        font = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 12)
+        text_image.text((0, 45), text, font=fnt)
+
+        image = image.rotate(90)
+        image.save('test.png')
+
+        return image

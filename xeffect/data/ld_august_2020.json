@@ -8,19 +8,19 @@
             "data": [
                 {
                     "title": "Original",
-                    "checked": []
+                    "checked": [1,2,3,4,5]
                 },
                 {
                     "title": "OCRemix",
-                    "checked": []
+                    "checked": [6,7,8,9,10]
                 },
                 {
                     "title": "Cover",
-                    "checked": []
+                    "checked": [11,12,13,14,15]
                 },
                 {
                     "title": "Major Album",
-                    "checked": []
+                    "checked": [16,17,18,19,20]
                 }
             ]
         },
@@ -30,15 +30,15 @@
             "data": [
                 {
                     "title": "Python",
-                    "checked": []
+                    "checked": [1,2,3,4,5]
                 },
                 {
                     "title": "Game dev",
-                    "checked": []
+                    "checked": [6,7,8,9,10]
                 },
                 {
                     "title": "Personal sites",
-                    "checked": []
+                    "checked": [11,12,13,14,15]
                 }
             ]
         },
@@ -48,15 +48,15 @@
             "data": [
                 {
                     "title": "Warhammer",
-                    "checked": []
+                    "checked": [1,2,3,4,5]
                 },
                 {
                     "title": "Play guitar",
-                    "checked": []
+                    "checked": [6,7,8,9,10]
                 },
                 {
                     "title": "Reading",
-                    "checked": []
+                    "checked": [11,12,13,14,15]
                 }
             ]
         }

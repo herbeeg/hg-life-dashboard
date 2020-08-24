@@ -44,6 +44,9 @@ class XEffect(tk.Frame):
                 checkbox = tk.Checkbutton(self)
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
+                if (count + 1) in data['checked']:
+                    checkbox.toggle()
+
                 self.col_index += 1
 
             self.row_index += 1
@@ -80,7 +83,6 @@ class XEffect(tk.Frame):
                         self.create_widget(item)
 
             except Exception as ex:
-                print(ex)
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
     def print_calendar_dates(self, dates):

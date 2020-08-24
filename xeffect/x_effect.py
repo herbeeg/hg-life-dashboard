@@ -16,17 +16,14 @@ class XEffect(tk.Frame):
 
         self.data_directory = '/xeffect/data/'
         self.row_index = 0
-        self.col_index = 0
+        self.col_index = 1
 
-        self.search_date = str(datetime.now().year) + '-' + str(datetime.now().month).zfill(2) + '-'
-        self.calendar = calendar.Calendar().itermonthdates(datetime.now().year, datetime.now().month)
-        self.calendar = [x for x in self.calendar if str(x).startswith(self.search_date)]
+        self.calendar = calendar.Calendar().itermonthdays(datetime.now().year, datetime.now().month)
+        self.calendar = [d for d in self.calendar if 0 != d]
 
         self.xeffect_data = self.load_xeffect_data()
 
     def create_widget(self, widget_item={}):
-        print(widget_item)
-
         background_colour = widget_item['colour']
         foreground_colour = '#ffffff'
 
@@ -79,22 +76,11 @@ class XEffect(tk.Frame):
 
     def print_calendar_dates(self, dates):
         for date in dates:
-            label = tk.Label(self, image=self.generate_date_image(date))
+            label = tk.Label(self, bg='#ffffff', fg='#000000', font=self.title_label_font)
+            label['text'] = str(date)
             label.grid(row=self.row_index, column=self.col_index)
 
             self.col_index += 1
 
         self.row_index += 1
-
-    def generate_date_image(self, text):
-        text = str(text)
-
-        image = Image.new(mode='RGB', size=(20,100), color=(0, 0, 0))
-        text_image = ImageDraw.Draw(image)
-        font = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 12)
-        text_image.text((0, 45), text, font=fnt)
-
-        image = image.rotate(90)
-        image.save('test.png')
-
-        return image
+        self.col_index = 0

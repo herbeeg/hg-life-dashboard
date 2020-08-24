@@ -29,16 +29,25 @@ class XEffect(tk.Frame):
 
         title_label = tk.Label(self, bg=background_colour, fg=foreground_colour, font=self.title_label_font)
         title_label['text'] = widget_item['title']
-        title_label.grid(row=self.row_index, column=self.col_index)
+        title_label.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
         self.row_index += 1
 
         for data in widget_item['data']:
             label = tk.Label(self, bg=background_colour, fg=foreground_colour)
             label['text'] = data['title']
-            label.grid(row=self.row_index, column=self.col_index)
+            label.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
+
+            self.col_index += 1
+
+            for count in range(len(self.calendar)):
+                checkbox = tk.Checkbutton(self)
+                checkbox.grid(row=self.row_index, column=self.col_index)
+
+                self.col_index += 1
 
             self.row_index += 1
+            self.col_index = 0
 
         return True
 
@@ -77,7 +86,7 @@ class XEffect(tk.Frame):
     def print_calendar_dates(self, dates):
         for date in dates:
             label = tk.Label(self, bg='#ffffff', fg='#000000', font=self.title_label_font)
-            label['text'] = str(date)
+            label['text'] = str(date).zfill(2)
             label.grid(row=self.row_index, column=self.col_index)
 
             self.col_index += 1

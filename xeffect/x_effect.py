@@ -7,7 +7,22 @@ import os
 from datetime import datetime
 
 class XEffect(tk.Frame):
+    """
+    Builds all of the calendar frame elements and 
+    contains logic for loading and saving the
+    current window state when the user is
+    toggling checkboxes.
+
+    Extends the tkinter Frame class.
+    """
     def __init__(self, master=None):
+        """
+        Set initial grid inboxes, title label fonts
+        and calendar data for the current month.
+
+        Args:
+            master (Tk, optional): The parent tkinter window element. Defaults to None.
+        """
         super().__init__(master)
         self.master = master
 
@@ -21,10 +36,23 @@ class XEffect(tk.Frame):
 
         self.calendar = calendar.Calendar().itermonthdays(datetime.now().year, datetime.now().month)
         self.calendar = [d for d in self.calendar if 0 != d]
+        """Using list comprehension to remove padded calendar dates."""
 
         self.xeffect_data = self.load_xeffect_data()
 
     def create_widget(self, widget_item={}):
+        """
+        Each item group is classed as a widget, with their
+        own titles, colours and rows of data.
+
+        The data is traversed and the labels and
+        checkboxes will be rendered out, the
+        amount being decided based on the
+        current month.
+
+        Args:
+            widget_item (dict, optional): The widget data pulled from the existing JSON. Defaults to {}.
+        """
         background_colour = widget_item['colour']
         foreground_colour = '#ffffff'
 
@@ -46,6 +74,7 @@ class XEffect(tk.Frame):
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
                 if (count + 1) in data['checked']:
+                    """We use the actual date rather than the index in the JSON file."""
                     checkbox.toggle()
 
                 self.col_index += 1
@@ -53,9 +82,19 @@ class XEffect(tk.Frame):
             self.row_index += 1
             self.col_index = 0
 
-        return True
-
     def load_xeffect_data(self):
+        """
+        If the provided file naming convention does not match
+        anything in the given directory, then the user is
+        allowed to choose a file of their own to help
+        with moving files and builds around.
+
+        Raises:
+            FileNotFoundError: Fail if the file does not exist in the given location
+
+        Raises:
+            TypeError: Fail if the file does not have the .json extension
+        """
         try:
             with open(self.master.get_working_directory() + self.data_directory + 'ld_august_2020.json') as file:
                 filename, file_extension = os.path.splitext(file.name)
@@ -66,6 +105,7 @@ class XEffect(tk.Frame):
                 tk.messagebox.showerror(title='Error Loading Data', message='No valid file selected')
 
                 self.master.load_view('menu')
+                """Return to the main menu if there is a problem while loading a file."""
                 return
 
         if filename:
@@ -92,9 +132,18 @@ class XEffect(tk.Frame):
             return None
 
     def print_calendar_dates(self, dates):
+        """
+        Render out the calendar dates at the top of the
+        grid layout, ensuring that the number of
+        digits for each column is the same.
+
+        Args:
+            dates (Iterator): List of day numbers for the current month
+        """
         for date in dates:
             label = tk.Label(self, bg='#ffffff', fg='#000000', font=self.title_label_font)
             label['text'] = str(date).zfill(2)
+            """Prefix any single digit dates with a zero."""
             label.grid(row=self.row_index, column=self.col_index)
 
             self.col_index += 1

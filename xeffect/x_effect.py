@@ -5,12 +5,13 @@ import json
 import os
 
 from datetime import datetime
-from PIL import Image, ImageDraw, ImageFont, ImageTk
 
 class XEffect(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
+
+        self.finished_loading = False
 
         self.title_label_font = tk.font.Font(family='TkDefaultFont', weight='bold')
 
@@ -41,7 +42,7 @@ class XEffect(tk.Frame):
             self.col_index += 1
 
             for count in range(len(self.calendar)):
-                checkbox = tk.Checkbutton(self)
+                checkbox = tk.Checkbutton(self, command=self.save_xeffect_data)
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
                 if (count + 1) in data['checked']:
@@ -82,8 +83,13 @@ class XEffect(tk.Frame):
                     for item in json_data['items']:
                         self.create_widget(item)
 
+                    self.finished_loading = True
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
+
+    def save_xeffect_data(self):
+        if False == self.finished_loading:
+            return None
 
     def print_calendar_dates(self, dates):
         for date in dates:

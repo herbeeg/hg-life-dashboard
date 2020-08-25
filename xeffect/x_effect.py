@@ -132,10 +132,28 @@ class XEffect(tk.Frame):
         return json_data
 
     def save_xeffect_data(self, parent, index):
-        print(parent)
-        print(index)
         if False == self.finished_loading:
             return None
+        
+        for item in self.xeffect_data['items']:
+            for data in item['data']:
+                if data['title'] == parent:
+                    if index in data['checked']:
+                        data['checked'].remove(index)
+                    else:
+                        data['checked'].append(index)
+                        data['checked'].sort()
+
+                    self.write_to_file(json.dumps(self.xeffect_data))
+
+    def write_to_file(self, encoded_json):
+        try:
+            with open(self.master.get_working_directory() + self.data_directory + 'ld_august_2020.json', 'w+') as json_file:
+                file_contents = encoded_json
+                json_file.write(file_contents)
+                json_file.close()
+        except Exception as ex:
+            tk.messagebox.showerror(title='Error Saving Data', message='Unable to save file %s' % json_file.name)
 
     def print_calendar_dates(self, dates):
         """

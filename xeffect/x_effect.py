@@ -38,7 +38,8 @@ class XEffect(tk.Frame):
         self.calendar = [d for d in self.calendar if 0 != d]
         """Using list comprehension to remove padded calendar dates."""
 
-        self.xeffect_data = self.load_xeffect_data()
+        self.print_calendar_title('August 2020')
+        self.load_xeffect_data()
 
     def create_widget(self, widget_item={}):
         """
@@ -150,3 +151,10 @@ class XEffect(tk.Frame):
 
         self.row_index += 1
         self.col_index = 0
+
+    def print_calendar_title(self, title):
+        label = tk.Label(self, font=self.title_label_font)
+        label['text'] = title
+        label.grid(row=self.row_index, column=self.col_index, columnspan=len(self.calendar), pady=10)
+
+        self.row_index += 1

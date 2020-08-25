@@ -5,6 +5,7 @@ import json
 import os
 
 from datetime import datetime
+from functools import partial
 
 class XEffect(tk.Frame):
     """
@@ -39,7 +40,7 @@ class XEffect(tk.Frame):
         """Using list comprehension to remove padded calendar dates."""
 
         self.print_calendar_title('August 2020')
-        self.load_xeffect_data()
+        self.xeffect_data = self.load_xeffect_data()
 
     def create_widget(self, widget_item={}):
         """
@@ -71,7 +72,7 @@ class XEffect(tk.Frame):
             self.col_index += 1
 
             for count in range(len(self.calendar)):
-                checkbox = tk.Checkbutton(self, command=self.save_xeffect_data)
+                checkbox = tk.Checkbutton(self, command=partial(self.save_xeffect_data, parent=data['title'], index=(count + 1)))
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
                 if (count + 1) in data['checked']:
@@ -128,7 +129,11 @@ class XEffect(tk.Frame):
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
-    def save_xeffect_data(self):
+        return json_data
+
+    def save_xeffect_data(self, parent, index):
+        print(parent)
+        print(index)
         if False == self.finished_loading:
             return None
 

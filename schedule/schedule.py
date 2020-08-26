@@ -15,31 +15,33 @@ class Schedule(tk.Frame):
     def create_widgets(self):
         hours = list(range(24))
 
+        self.generation_options = tk.Frame(self)
+
         self.day_start = tk.StringVar(self.master)
         self.day_start.set('0')
 
         self.day_end = tk.StringVar(self.master)
         self.day_end.set('0')
 
-        self.end_time_label = tk.Label(self)
+        self.end_time_label = tk.Label(self.generation_options)
         self.end_time_label['text'] = 'End Time:'
         self.end_time_label.pack(side='left', pady=self.frame_padding)
 
-        self.end_time_input = tk.OptionMenu(self, self.day_end, *hours)
+        self.end_time_input = tk.OptionMenu(self.generation_options, self.day_end, *hours)
         self.end_time_input.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.start_time_label = tk.Label(self)
+        self.start_time_label = tk.Label(self.generation_options)
         self.start_time_label['text'] = 'Start Time:'
         self.start_time_label.pack(side='left', pady=self.frame_padding)
 
-        self.start_time_input = tk.OptionMenu(self, self.day_start, *hours)
+        self.start_time_input = tk.OptionMenu(self.generation_options, self.day_start, *hours)
         self.start_time_input.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.generate_button = tk.Button(self, padx=self.button_padding, command=self.generate_week_schedule)
+        self.generate_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.generate_week_schedule)
         self.generate_button['text'] = 'Generate'
         self.generate_button.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
-        return True
+        self.generation_options.pack(side='top')
 
     def generate_week_schedule(self):
         self.schedule_grid = ScheduleGenerator(self)

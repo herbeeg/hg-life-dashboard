@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from .schedule_generator import ScheduleGenerator
+
 class Schedule(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -40,4 +42,5 @@ class Schedule(tk.Frame):
         return True
 
     def generate_week_schedule(self):
-        return True
+        self.schedule_grid = ScheduleGenerator(self)
+        self.schedule_grid.pack()

@@ -1,8 +1,9 @@
 import tkinter as tk
 import os
 
-import main.main_menu as main
 import journal.journal as journal
+import main.main_menu as main
+import schedule.schedule as schedule
 import xeffect.x_effect as xeffect
 
 from functools import partial
@@ -66,7 +67,9 @@ class MainApp(tk.Frame):
         elif 'schedule' == view:
             self.master.title('Schedule - ' + self.window_title)
 
-            self.schedule = ''
+            self.schedule = schedule.Schedule(self)
+            self.schedule.pack()
+            self.attach_back_button()
         elif 'journal' == view:
             self.master.title('Journal - ' + self.window_title)
 
@@ -104,6 +107,14 @@ class MainApp(tk.Frame):
             self.menu_back.destroy()
 
     def get_working_directory(self):
+        """
+        Used throughout the entire application to
+        reference any local directories for
+        loading data files.
+
+        Returns:
+            str: The root application directory
+        """
         return os.getcwd()
 
 if '__main__' == __name__:

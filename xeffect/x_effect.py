@@ -42,7 +42,7 @@ class XEffect(tk.Frame):
 
         self.current_month_year = calendar.month_name[datetime.now().month].lower() + ' ' + str(datetime.now().year)
         self.search_filename = AppConstants.filePreface() + self.current_month_year.replace(' ', '_') + '.json'
-        print(self.search_filename)
+        """Calendar and date conversion for dynamic filename loading and title."""
 
         self.print_calendar_title(self.current_month_year.title())
         self.xeffect_data = self.load_xeffect_data()
@@ -78,6 +78,7 @@ class XEffect(tk.Frame):
 
             for count in range(len(self.calendar)):
                 checkbox = tk.Checkbutton(self, command=partial(self.save_xeffect_data, parent=data['title'], index=(count + 1)))
+                """We can track the unique title and checkbox index individually by passing them as parameters to the callable function when clicked."""
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
                 if (count + 1) in data['checked']:
@@ -96,11 +97,19 @@ class XEffect(tk.Frame):
         allowed to choose a file of their own to help
         with moving files and builds around.
 
+        We store a copy of the loaded data in a variable
+        that we can modify as changes are made by the 
+        user so it's much quicker and easier to
+        encode and save that back to a file. 
+
         Raises:
             FileNotFoundError: Fail if the file does not exist in the given location
 
         Raises:
             TypeError: Fail if the file does not have the .json extension
+
+        Returns:
+            dict: The JSON file contents, converted.
         """
         try:
             with open(self.master.get_working_directory() + self.data_directory + self.search_filename) as file:
@@ -137,7 +146,21 @@ class XEffect(tk.Frame):
         return json_data
 
     def save_xeffect_data(self, parent, index):
+        """
+        The loaded JSON data is stored locally so we're
+        just able to reference the class variable
+        contents to encode what's required to 
+        save back to the existing file.
+
+        Args:
+            parent (str): The row title for the checkbox
+            index (int): The grid position of the checkbox
+
+        Returns:
+            None: If the grid element is still loading
+        """
         if False == self.finished_loading:
+            """Wait until the checkbox grid has finished loading before allowing any save operations."""
             return None
         
         for item in self.xeffect_data['items']:
@@ -152,6 +175,14 @@ class XEffect(tk.Frame):
                     self.write_to_file(json.dumps(self.xeffect_data))
 
     def write_to_file(self, encoded_json):
+        """
+        The JSON gets condensed down into a single line 
+        but retains the whitespace to maintain some
+        readability as required.
+
+        Args:
+            encoded_json (str): Compressed JSON data
+        """
         try:
             with open(self.master.get_working_directory() + self.data_directory + self.search_filename, 'w+') as json_file:
                 file_contents = encoded_json
@@ -181,6 +212,18 @@ class XEffect(tk.Frame):
         self.col_index = 0
 
     def print_calendar_title(self, title):
+        """
+        The calendar title needs to stretch across the entirity
+        of the container so it can be centered correctly
+        and we can retain the grid structure. 
+        
+        Therefore, the columnspan parameter is used when
+        drawing the grid element. This is based on the 
+        amount of days for that given month.
+
+        Args:
+            title (str): The current month and year combined
+        """
         label = tk.Label(self, font=self.title_label_font)
         label['text'] = title
         label.grid(row=self.row_index, column=self.col_index, columnspan=len(self.calendar), pady=10)

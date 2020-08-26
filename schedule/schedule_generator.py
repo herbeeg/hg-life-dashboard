@@ -38,6 +38,7 @@ class ScheduleGenerator(tk.Frame):
                 hour_area.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
                 hour_area.bind('<Button-1>', partial(self.edit_schedule, label_object=hour_area))
+                """We're able to make use of the partial() function to pass keyword arguments as required."""
 
                 self.row_index += 1
             
@@ -45,6 +46,18 @@ class ScheduleGenerator(tk.Frame):
             self.col_index += 1
 
     def edit_schedule(self, event, label_object):
+        """
+        We need to parse the 'event' argument in this function 
+        as not doing so will result in issues with the 
+        required positional and keyword arguments.
+
+        The click event itself is a hidden positional
+        argument on the object's bind() function.
+
+        Args:
+            event (ButtonEvent): The registered click event
+            label_object (tk.Label): The original clicked tkinter Label
+        """
         label_object['text'] = 'Hello World'
 
     def column_titles(self):

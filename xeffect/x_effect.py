@@ -4,6 +4,7 @@ import calendar
 import json
 import os
 
+from app_constants import AppConstants
 from datetime import datetime
 from functools import partial
 
@@ -39,7 +40,11 @@ class XEffect(tk.Frame):
         self.calendar = [d for d in self.calendar if 0 != d]
         """Using list comprehension to remove padded calendar dates."""
 
-        self.print_calendar_title('August 2020')
+        self.current_month_year = calendar.month_name[datetime.now().month].lower() + ' ' + str(datetime.now().year)
+        self.search_filename = AppConstants.filePreface() + self.current_month_year.replace(' ', '_') + '.json'
+        print(self.search_filename)
+
+        self.print_calendar_title(self.current_month_year.title())
         self.xeffect_data = self.load_xeffect_data()
 
     def create_widget(self, widget_item={}):
@@ -98,7 +103,7 @@ class XEffect(tk.Frame):
             TypeError: Fail if the file does not have the .json extension
         """
         try:
-            with open(self.master.get_working_directory() + self.data_directory + 'ld_august_2020.json') as file:
+            with open(self.master.get_working_directory() + self.data_directory + self.search_filename) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
             try:
@@ -148,7 +153,7 @@ class XEffect(tk.Frame):
 
     def write_to_file(self, encoded_json):
         try:
-            with open(self.master.get_working_directory() + self.data_directory + 'ld_august_2020.json', 'w+') as json_file:
+            with open(self.master.get_working_directory() + self.data_directory + self.search_filename, 'w+') as json_file:
                 file_contents = encoded_json
                 json_file.write(file_contents)
                 json_file.close()

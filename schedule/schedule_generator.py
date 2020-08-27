@@ -21,7 +21,10 @@ class ScheduleGenerator(tk.Frame):
         }
 
         for day in self.column_titles():
-            self.grid_data.update({day:{'data':[]}})
+            self.grid_data.update({day:{'data':{}}})
+
+            for hour in list(range(self.hour_start, self.hour_end)):
+                self.grid_data[day]['data'].update({str(hour):''})
 
         self.create_widgets()
 

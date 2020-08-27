@@ -1,0 +1,116 @@
+{
+    "days": [
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        },
+        {
+            "data": [
+                {
+                    "hour": 4,
+                    "text": "First entry"
+                },
+                {
+                    "hour": 5,
+                    "text": ""
+                },
+                {
+                    "hour": 6,
+                    "text": "Second entry"
+                }
+            ]
+        }
+    ]
+}

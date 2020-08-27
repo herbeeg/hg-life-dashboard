@@ -8,6 +8,8 @@ class Schedule(tk.Frame):
         super().__init__(master)
         self.master = master
 
+        self.data_directory = 'schedule/data/weekly_schedule.json'
+
         self.frame_padding = 10
         self.button_padding = 30
 
@@ -42,6 +44,10 @@ class Schedule(tk.Frame):
         self.generate_button['text'] = 'Generate'
         self.generate_button.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
+        self.save_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.save_schedule)
+        self.save_button['text'] = 'Save'
+        self.save_button.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
+
         self.generation_options.pack(side='top')
 
     def generate_week_schedule(self):
@@ -67,6 +73,12 @@ class Schedule(tk.Frame):
         task = tk.simpledialog.askstring(title='', prompt='Enter Task Name:', initialvalue=label_object['text'])
 
         label_object['text'] = task
+
+    def save_schedule(self):
+        try:
+            return self.schedule_grid.get_data()
+        except AttributeError:
+            tk.messagebox.showerror(title='Error Saving Data', message='Grid schedule has not been generated yet.')
 
     def clear_schedule(self):
         self.schedule_grid.destroy()

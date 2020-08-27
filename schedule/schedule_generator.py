@@ -15,6 +15,8 @@ class ScheduleGenerator(tk.Frame):
         self.hour_start = hour_start
         self.hour_end = hour_end
 
+        self.grid_data = {}
+
         self.create_widgets()
 
     def create_widgets(self):
@@ -58,3 +60,6 @@ class ScheduleGenerator(tk.Frame):
             'Saturday',
             'Sunday'
         ]
+
+    def get_data(self):
+        return self.grid_data

@@ -76,7 +76,15 @@ class Schedule(tk.Frame):
 
     def save_schedule(self):
         try:
-            return self.schedule_grid.get_data()
+            data = self.schedule_grid.get_data()
+
+            try:
+                with open(self.master.get_working_directory() + self.data_directory, 'w+') as json_file:
+                    file_contents = json.dumps(data)
+                    json_file.write(file_contents)
+                    json_file.close()
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Saving Data', message='Unable to save file %s' % json_file.name)
         except AttributeError:
             tk.messagebox.showerror(title='Error Saving Data', message='Grid schedule has not been generated yet.')
 

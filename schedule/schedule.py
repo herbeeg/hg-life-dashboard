@@ -81,6 +81,11 @@ class Schedule(tk.Frame):
 
         label_object['text'] = task
 
+        json = self.schedule_grid.get_data()
+        json[day]['data'][str(hour)] = task
+
+        self.schedule_grid.store_data(json)
+
     def save_schedule(self):
         try:
             data = self.schedule_grid.get_data()

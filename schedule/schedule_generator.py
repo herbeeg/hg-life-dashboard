@@ -68,7 +68,6 @@ class ScheduleGenerator(tk.Frame):
 
     def store_data(self, json_string):
         self.grid_data = json_string
-        print(self.grid_data)
 
     def get_data(self):
         return self.grid_data

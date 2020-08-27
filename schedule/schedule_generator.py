@@ -3,7 +3,7 @@ import tkinter as tk
 from functools import partial
 
 class ScheduleGenerator(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, hour_start=0, hour_end=23):
         super().__init__(master)
         self.master = master
 
@@ -12,10 +12,13 @@ class ScheduleGenerator(tk.Frame):
         self.row_index = 1
         self.col_index = 0
 
+        self.hour_start = hour_start
+        self.hour_end = hour_end
+
         self.create_widgets()
 
     def create_widgets(self):
-        for hour in list(range(24)):
+        for hour in list(range(self.hour_start, self.hour_end)):
             hour_display = tk.Label(self)
             hour_display['text'] = hour
             hour_display.grid(row=self.row_index, column=self.col_index, sticky='W')
@@ -32,33 +35,21 @@ class ScheduleGenerator(tk.Frame):
 
             self.row_index += 1
 
-            for hour in list(range(24)):
+            print(self.hour_start)
+            print(self.hour_end)
+
+            for hour in list(range(self.hour_start, self.hour_end)):
                 hour_area = tk.Label(self, borderwidth=2, relief='raised', pady=10)
                 hour_area['text'] = day + ' ' + str(hour)
                 hour_area.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
-                hour_area.bind('<Button-1>', partial(self.edit_schedule, label_object=hour_area))
+                hour_area.bind('<Button-1>', partial(self.master.edit_schedule, label_object=hour_area))
                 """We're able to make use of the partial() function to pass keyword arguments as required."""
 
                 self.row_index += 1
             
             self.row_index = 0
             self.col_index += 1
-
-    def edit_schedule(self, event, label_object):
-        """
-        We need to parse the 'event' argument in this function 
-        as not doing so will result in issues with the 
-        required positional and keyword arguments.
-
-        The click event itself is a hidden positional
-        argument on the object's bind() function.
-
-        Args:
-            event (ButtonEvent): The registered click event
-            label_object (tk.Label): The original clicked tkinter Label
-        """
-        label_object['text'] = 'Hello World'
 
     def column_titles(self):
         return [

@@ -5,112 +5,91 @@
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         },
         {
             "data": [
                 {
-                    "hour": 4,
-                    "text": "First entry"
+                    "4": "First entry"
                 },
                 {
-                    "hour": 5,
-                    "text": ""
+                    "5": ""
                 },
                 {
-                    "hour": 6,
-                    "text": "Second entry"
+                    "6": "Second entry"
                 }
             ]
         }

@@ -1,3 +1,5 @@
+import json
+import os
 import tkinter.simpledialog
 import tkinter as tk
 
@@ -8,7 +10,7 @@ class Schedule(tk.Frame):
         super().__init__(master)
         self.master = master
 
-        self.data_directory = 'schedule/data/weekly_schedule.json'
+        self.data_directory = '/schedule/data/weekly_schedule.json'
 
         self.frame_padding = 10
         self.button_padding = 30
@@ -50,6 +52,8 @@ class Schedule(tk.Frame):
 
         self.generation_options.pack(side='top')
 
+        self.maybe_load_schedule()
+
     def generate_week_schedule(self):
         if hasattr(self, 'schedule_grid'):
             self.clear_schedule()
@@ -87,6 +91,32 @@ class Schedule(tk.Frame):
                 tk.messagebox.showerror(title='Error Saving Data', message='Unable to save file %s' % json_file.name)
         except AttributeError:
             tk.messagebox.showerror(title='Error Saving Data', message='Grid schedule has not been generated yet.')
+
+    def maybe_load_schedule(self):
+        try:
+            with open(self.master.get_working_directory() + self.data_directory) as file:
+                filename, file_extension = os.path.splitext(file.name)
+        except FileNotFoundError:
+            tk.messagebox.showerror(title='Error Loading Data', message='No valid file found.')
+            
+            return False
+
+        if filename:
+            filename += file_extension
+
+            try:
+                if '.json' != file_extension:
+                    raise TypeError('Invalid file extension %s' % file_extension)
+
+                with open(filename) as file:
+                    json_data = json.load(file)
+
+                    self.day_start.set(json_data['start'])
+                    self.day_end.set(json_data['end'])
+
+                    self.generate_week_schedule()
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
     def clear_schedule(self):
         self.schedule_grid.destroy()

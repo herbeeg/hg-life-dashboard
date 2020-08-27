@@ -52,16 +52,19 @@ class Schedule(tk.Frame):
 
         self.generation_options.pack(side='top')
 
-        self.maybe_load_schedule()
+        self.json_data = self.maybe_load_schedule()
 
-    def generate_week_schedule(self):
+    def generate_week_schedule(self, from_file=False):
         if hasattr(self, 'schedule_grid'):
             self.clear_schedule()
 
         self.schedule_grid = ScheduleGenerator(self, self.day_start.get(), self.day_end.get())
         self.schedule_grid.pack()
 
-    def edit_schedule(self, event, label_object):
+        if from_file:
+            self.schedule_grid.store_data(json_string=self.json_data)
+
+    def edit_schedule(self, event, label_object, day, hour):
         """
         We need to parse the 'event' argument in this function 
         as not doing so will result in issues with the 
@@ -97,7 +100,7 @@ class Schedule(tk.Frame):
             with open(self.master.get_working_directory() + self.data_directory) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
-            tk.messagebox.showerror(title='Error Loading Data', message='No valid file found.')
+            tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
             
             return False
 
@@ -109,12 +112,12 @@ class Schedule(tk.Frame):
                     raise TypeError('Invalid file extension %s' % file_extension)
 
                 with open(filename) as file:
-                    json_data = json.load(file)
+                    self.json_data = json.load(file)
 
-                    self.day_start.set(json_data['start'])
-                    self.day_end.set(json_data['end'])
+                    self.day_start.set(self.json_data['start'])
+                    self.day_end.set(self.json_data['end'])
 
-                    self.generate_week_schedule()
+                    self.generate_week_schedule(from_file=True)
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 

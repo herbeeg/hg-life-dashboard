@@ -15,7 +15,13 @@ class ScheduleGenerator(tk.Frame):
         self.hour_start = hour_start
         self.hour_end = hour_end
 
-        self.grid_data = {'start': self.hour_start, 'end': self.hour_end, 'days': []}
+        self.grid_data = {
+            'start': self.hour_start,
+            'end': self.hour_end
+        }
+
+        for day in self.column_titles():
+            self.grid_data.update({day:{'data':[]}})
 
         self.create_widgets()
 
@@ -32,17 +38,16 @@ class ScheduleGenerator(tk.Frame):
         
         for day in self.column_titles():
             day_title = tk.Label(self, width=15, padx=self.frame_padding)
-            day_title['text'] = day
+            day_title['text'] = day.title()
             day_title.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
             self.row_index += 1
 
             for hour in list(range(self.hour_start, self.hour_end)):
                 hour_area = tk.Label(self, borderwidth=2, relief='raised', pady=10)
-                hour_area['text'] = day + ' ' + str(hour)
                 hour_area.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
-                hour_area.bind('<Button-1>', partial(self.master.edit_schedule, label_object=hour_area))
+                hour_area.bind('<Button-1>', partial(self.master.edit_schedule, label_object=hour_area, day=day, hour=hour))
                 """We're able to make use of the partial() function to pass keyword arguments as required."""
 
                 self.row_index += 1
@@ -52,14 +57,18 @@ class ScheduleGenerator(tk.Frame):
 
     def column_titles(self):
         return [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
         ]
+
+    def store_data(self, json_string):
+        self.grid_data = json_string
+        print(self.grid_data)
 
     def get_data(self):
         return self.grid_data

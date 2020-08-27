@@ -45,6 +45,9 @@ class Schedule(tk.Frame):
         self.generation_options.pack(side='top')
 
     def generate_week_schedule(self):
+        if hasattr(self, 'schedule_grid'):
+            self.clear_schedule()
+
         self.schedule_grid = ScheduleGenerator(self, self.day_start.get(), self.day_end.get())
         self.schedule_grid.pack()
 
@@ -64,3 +67,6 @@ class Schedule(tk.Frame):
         task = tk.simpledialog.askstring(title='', prompt='Enter Task Name:', initialvalue=label_object['text'])
 
         label_object['text'] = task
+
+    def clear_schedule(self):
+        self.schedule_grid.destroy()

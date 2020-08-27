@@ -1,3 +1,4 @@
+import tkinter.simpledialog
 import tkinter as tk
 
 from .schedule_generator import ScheduleGenerator
@@ -60,4 +61,6 @@ class Schedule(tk.Frame):
             event (ButtonEvent): The registered click event
             label_object (tk.Label): The original clicked tkinter Label
         """
-        label_object['text'] = 'Hello World'
+        task = tk.simpledialog.askstring(title='', prompt='Enter Task Name:', initialvalue=label_object['text'])
+
+        label_object['text'] = task

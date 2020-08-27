@@ -35,9 +35,6 @@ class ScheduleGenerator(tk.Frame):
 
             self.row_index += 1
 
-            print(self.hour_start)
-            print(self.hour_end)
-
             for hour in list(range(self.hour_start, self.hour_end)):
                 hour_area = tk.Label(self, borderwidth=2, relief='raised', pady=10)
                 hour_area['text'] = day + ' ' + str(hour)

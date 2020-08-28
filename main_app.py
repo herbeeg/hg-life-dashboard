@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
 
+import goals.goal_setting as goals
 import journal.journal as journal
 import main.main_menu as main
 import schedule.schedule as schedule
@@ -59,7 +60,9 @@ class MainApp(tk.Frame):
         elif 'goals' == view:
             self.master.title('Goal Setting - ' + self.window_title)
 
-            self.goals = ''
+            self.goals = goals.GoalSetting(self)
+            self.goals.pack()
+            self.attach_back_button()
         elif 'schedule' == view:
             self.master.title('Schedule - ' + self.window_title)
 

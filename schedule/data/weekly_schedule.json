@@ -4,50 +4,50 @@
     "monday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "tuesday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "wednesday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "thursday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "friday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "saturday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     },
     "sunday": {
         "data": {
             "4": "First entry",
-            "5": "",
-            "6": "Second entry"
+            "5": "Second entry",
+            "6": "Third entry"
         }
     }
 }

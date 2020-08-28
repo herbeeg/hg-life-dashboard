@@ -50,10 +50,6 @@ class MainApp(tk.Frame):
             self.main = main.MainMenu(self)
             self.main.pack()
             self.detach_back_button()
-        elif 'budget' == view:
-            self.master.title('Budget - ' + self.window_title)
-
-            self.budget = ''
         elif 'xeffect' == view:
             self.master.title('X-Effect - ' + self.window_title)
             

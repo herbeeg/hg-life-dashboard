@@ -48,10 +48,6 @@ class MainMenu(tk.Frame):
         self.goals_open['text'] = 'Goal Setting'
         self.goals_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.schedules_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'schedule'))
-        self.schedules_open['text'] = 'Schedule'
-        self.schedules_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
-
         self.journal_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'journal'))
         self.journal_open['text'] = 'Journal'
         self.journal_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)

@@ -3,7 +3,7 @@ import tkinter as tk
 from functools import partial
 
 class ScheduleGenerator(tk.Frame):
-    def __init__(self, master=None, hour_start=0, hour_end=23):
+    def __init__(self, master=None, hour_start=0, hour_end=23, loads={}):
         super().__init__(master)
         self.master = master
 
@@ -15,16 +15,19 @@ class ScheduleGenerator(tk.Frame):
         self.hour_start = hour_start
         self.hour_end = hour_end
 
-        self.grid_data = {
-            'start': self.hour_start,
-            'end': self.hour_end
-        }
+        if loads:
+            self.grid_data = loads
+        else:
+            self.grid_data = {
+                'start': self.hour_start,
+                'end': self.hour_end
+            }
+            
+            for day in self.column_titles():
+                self.grid_data.update({day:{'data':{}}})
 
-        for day in self.column_titles():
-            self.grid_data.update({day:{'data':{}}})
-
-            for hour in list(range(self.hour_start, self.hour_end)):
-                self.grid_data[day]['data'].update({str(hour):''})
+                for hour in list(range(self.hour_start, self.hour_end)):
+                    self.grid_data[day]['data'].update({str(hour):''})
 
         self.create_widgets()
 
@@ -48,6 +51,7 @@ class ScheduleGenerator(tk.Frame):
 
             for hour in list(range(self.hour_start, self.hour_end)):
                 hour_area = tk.Label(self, borderwidth=2, relief='raised', pady=10)
+                hour_area['text'] = self.grid_data[day]['data'][str(hour)]
                 hour_area.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
                 hour_area.bind('<Button-1>', partial(self.master.edit_schedule, label_object=hour_area, day=day, hour=hour))

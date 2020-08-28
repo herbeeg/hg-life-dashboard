@@ -58,7 +58,7 @@ class Schedule(tk.Frame):
         if hasattr(self, 'schedule_grid'):
             self.clear_schedule()
 
-        self.schedule_grid = ScheduleGenerator(self, self.day_start.get(), self.day_end.get())
+        self.schedule_grid = ScheduleGenerator(self, self.day_start.get(), self.day_end.get(), self.json_data)
         self.schedule_grid.pack()
 
         if from_file:
@@ -107,7 +107,7 @@ class Schedule(tk.Frame):
         except FileNotFoundError:
             tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
             
-            return False
+            return {}
 
         if filename:
             filename += file_extension

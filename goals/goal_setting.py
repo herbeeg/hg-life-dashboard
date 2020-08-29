@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from .goal_dialog import GoalDialog
+
 class GoalSetting(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -31,4 +33,4 @@ class GoalSetting(tk.Frame):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
 
     def generate_goal_layout(self):
-        return True
+        self.goal_dialog = GoalDialog(self.master)

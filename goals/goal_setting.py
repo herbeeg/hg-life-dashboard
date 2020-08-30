@@ -11,8 +11,8 @@ class GoalSetting(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.top_padding = tk.Label(self, text='')
-        self.top_padding.grid(row=0, column=0, columnspan=12, pady=10)
+        top_padding = tk.Label(self, text='')
+        top_padding.grid(row=0, column=0, columnspan=12, pady=10)
 
         button_text = 'New Goal'
 
@@ -32,8 +32,8 @@ class GoalSetting(tk.Frame):
         self.goal_4_new['text'] = button_text
         self.goal_4_new.grid(row=1, column=10, sticky='NSEW')
 
-        self.bot_padding = tk.Label(self, text='')
-        self.bot_padding.grid(row=2, column=0, columnspan=12, pady=10)
+        bot_padding = tk.Label(self, text='')
+        bot_padding.grid(row=2, column=0, columnspan=12, pady=10)
 
         for col in range(12):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
@@ -46,6 +46,8 @@ class GoalSetting(tk.Frame):
 
         if 1 == col_index:
             self.goal_1_new.destroy()
+            self.goal_1_frame = tk.Frame(self)
+
             self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
             self.goal_1_edit['text'] = button_text
             self.goal_1_edit.grid(row=1, column=0, columnspan=3)
@@ -60,9 +62,12 @@ class GoalSetting(tk.Frame):
         self.grid_columnconfigure(col_index, weight=1, uniform='')
         self.grid_columnconfigure(col_index+1, weight=1, uniform='')
         
-        label = tk.Label(self)
+        label = tk.Label(self.goal_1_frame)
         label['text'] = 'Goal 1: ' + self.goal_dialog.get_goal_config()['name']
-        label.grid(row=3, column=0, columnspan=3)
+        label.grid(row=0, column=0)
+
+        self.goal_1_frame.grid(row=3, column=0, columnspan=3)
 
     def edit_goal_layout(self, col_index):
-        return True
+        for widget in self.goal_1_frame.winfo_children():
+            print(widget['text'])

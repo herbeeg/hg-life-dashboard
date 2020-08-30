@@ -4,6 +4,8 @@ import tkinter.simpledialog
 class GoalDialog(tk.simpledialog.Dialog):
     def body(self, master=None):
         self.input_padding = 2
+        
+        self.goal_config = {}
 
         self.goal_name_label = tk.Label(master)
         self.goal_name_label['text'] = 'Goal Name:'
@@ -19,7 +21,7 @@ class GoalDialog(tk.simpledialog.Dialog):
 
         self.key_result_label = tk.Label(master)
         self.key_result_label['text'] = 'Key Results:'
-        self.key_result_label.grid(row=2, column=0, columnspan=2, pady=self.input_padding)
+        self.key_result_label.grid(row=2, column=0, pady=self.input_padding)
         self.key_result_add = tk.Button(master, command=self.add_key_result)
         self.key_result_add['text'] = '-Add-'
         self.key_result_add.grid(row=3, column=0, pady=self.input_padding)
@@ -35,11 +37,18 @@ class GoalDialog(tk.simpledialog.Dialog):
         return self.goal_name_input
 
     def apply(self):
-        print(self.goal_name_input.get())
+        self.goal_config = {
+            'name': self.goal_name_input.get(),
+            'date': self.goal_deadline_input.get(),
+            'results': []
+        }
+
+        for result in self.key_result_list.get(0, tk.END):
+            self.goal_config['results'].append(result)
 
     def add_key_result(self):
         if 5 > self.key_result_list.size():
-            if not any(self.key_result_input.get() in item for item in self.key_result_list.get(0, tk.END)):
+            if not any(item == self.key_result_input.get() for item in self.key_result_list.get(0, tk.END)):
                 """Don't allow any duplicates in the listbox tuple."""
                 self.key_result_list.insert(tk.END, self.key_result_input.get())
         else:
@@ -47,3 +56,6 @@ class GoalDialog(tk.simpledialog.Dialog):
 
     def remove_key_result(self):
         self.key_result_list.delete(tk.ANCHOR)
+
+    def get_goal_config(self):
+        return self.goal_config

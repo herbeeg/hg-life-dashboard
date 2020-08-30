@@ -26,10 +26,19 @@ class GoalDialog(tk.simpledialog.Dialog):
         self.key_result_input = tk.Entry(master)
         self.key_result_input.grid(row=3, column=1, pady=self.input_padding)
 
+        self.key_result_remove = tk.Button(master, command=self.remove_key_result)
+        self.key_result_remove['text'] = '-Remove-'
+        self.key_result_remove.grid(row=4, column=0, pady=self.input_padding)
+        self.key_result_list = tk.Listbox(master, selectmode=tk.SINGLE)
+        self.key_result_list.grid(row=4, column=1, pady=self.input_padding)
+
         return self.goal_name_input
 
     def apply(self):
         print(self.goal_name_input.get())
 
     def add_key_result(self):
-        print('added')
+        self.key_result_list.insert(tk.END, self.key_result_input.get())
+
+    def remove_key_result(self):
+        self.key_result_list.delete(tk.ANCHOR)

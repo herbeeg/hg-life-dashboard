@@ -38,7 +38,12 @@ class GoalDialog(tk.simpledialog.Dialog):
         print(self.goal_name_input.get())
 
     def add_key_result(self):
-        self.key_result_list.insert(tk.END, self.key_result_input.get())
+        if 5 > self.key_result_list.size():
+            if not any(self.key_result_input.get() in item for item in self.key_result_list.get(0, tk.END)):
+                """Don't allow any duplicates in the listbox tuple."""
+                self.key_result_list.insert(tk.END, self.key_result_input.get())
+        else:
+            tk.messagebox.showwarning(title='Item Limit Reached', message='Maximum number of key result items reached.')
 
     def remove_key_result(self):
         self.key_result_list.delete(tk.ANCHOR)

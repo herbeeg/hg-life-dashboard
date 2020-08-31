@@ -44,6 +44,9 @@ class GoalSetting(tk.Frame):
         self.goal_dialog = GoalDialog(self.master)
         """Wait for user to fill in the dialog options or cancel the operation."""
 
+        if not self.goal_dialog.get_goal_config():
+            return
+
         button_text = 'Edit Goal'
 
         if 1 == col_index:

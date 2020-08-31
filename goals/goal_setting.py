@@ -51,19 +51,42 @@ class GoalSetting(tk.Frame):
             self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
             self.goal_1_edit['text'] = button_text
             self.goal_1_edit.grid(row=1, column=0, columnspan=3)
+
+            goal_number = 'Goal 1: '
         elif 4 == col_index:
             self.goal_2_button.destroy()
+            self.goal_2_frame = tk.Frame(self)
+
+            self.goal_2_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=4))
+            self.goal_2_edit['text'] = button_text
+            self.goal_2_edit.grid(row=1, column=3, columnspan=3)
+
+            goal_number = 'Goal 2: '
         elif 7 == col_index:
             self.goal_3_button.destroy()
+            self.goal_3_frame = tk.Frame(self)
+
+            self.goal_3_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=7))
+            self.goal_3_edit['text'] = button_text
+            self.goal_3_edit.grid(row=1, column=6, columnspan=3)
+
+            goal_number = 'Goal 3: '
         elif 10 == col_index:
             self.goal_4_button.destroy()
+            self.goal_4_frame = tk.Frame(self)
+
+            self.goal_4_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=10))
+            self.goal_4_edit['text'] = button_text
+            self.goal_4_edit.grid(row=1, column=9, columnspan=3)
+
+            goal_number = 'Goal 4: '
 
         self.grid_columnconfigure(col_index-1, weight=1, uniform='')
         self.grid_columnconfigure(col_index, weight=1, uniform='')
         self.grid_columnconfigure(col_index+1, weight=1, uniform='')
         
         label = tk.Label(self.goal_1_frame)
-        label['text'] = 'Goal 1: ' + self.goal_dialog.get_goal_config()['name']
+        label['text'] = goal_number + self.goal_dialog.get_goal_config()['name']
         label.grid(row=0, column=0)
 
         self.goal_1_frame.grid(row=3, column=0, columnspan=3)

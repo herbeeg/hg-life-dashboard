@@ -1,5 +1,6 @@
-import tkinter as tk
+import tkinter.messagebox
 import tkinter.simpledialog
+import tkinter as tk
 
 class GoalDialog(tk.simpledialog.Dialog):
     def body(self, master=None):
@@ -36,7 +37,15 @@ class GoalDialog(tk.simpledialog.Dialog):
 
         return self.goal_name_input
 
-    def apply(self):
+    def validate(self):
+        if not self.goal_name_input.get():
+            tk.messagebox.showwarning('Bad Input Value', 'Goal name input was empty.')
+            return 0
+
+        elif not self.goal_deadline_input.get():
+            tk.messagebox.showwarning('Bad Input Value', 'Goal deadline input was empty.')
+            return 0
+
         self.goal_config = {
             'name': self.goal_name_input.get(),
             'date': self.goal_deadline_input.get(),
@@ -45,6 +54,8 @@ class GoalDialog(tk.simpledialog.Dialog):
 
         for result in self.key_result_list.get(0, tk.END):
             self.goal_config['results'].append(result)
+
+        return 1
 
     def add_key_result(self):
         if 5 > self.key_result_list.size():

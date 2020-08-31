@@ -35,6 +35,8 @@ class GoalDialog(tk.simpledialog.Dialog):
         self.key_result_list = tk.Listbox(master, selectmode=tk.SINGLE)
         self.key_result_list.grid(row=4, column=1, pady=self.input_padding)
 
+        self.focus_force()
+
         return self.goal_name_input
 
     def validate(self):

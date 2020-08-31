@@ -51,37 +51,43 @@ class GoalSetting(tk.Frame):
             self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
             self.goal_1_edit['text'] = button_text
             self.goal_1_edit.grid(row=1, column=0, columnspan=3)
+
+            self.load_goal_layout(self.goal_1_frame)
+            self.goal_1_frame.grid(row=3, column=0, columnspan=3)
         elif 4 == col_index:
-            self.goal_2_button.destroy()
+            self.goal_2_new.destroy()
             self.goal_2_frame = tk.Frame(self)
 
             self.goal_2_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=4))
             self.goal_2_edit['text'] = button_text
             self.goal_2_edit.grid(row=1, column=3, columnspan=3)
+
+            self.load_goal_layout(self.goal_2_frame)
+            self.goal_2_frame.grid(row=3, column=3, columnspan=3)
         elif 7 == col_index:
-            self.goal_3_button.destroy()
+            self.goal_3_new.destroy()
             self.goal_3_frame = tk.Frame(self)
 
             self.goal_3_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=7))
             self.goal_3_edit['text'] = button_text
             self.goal_3_edit.grid(row=1, column=6, columnspan=3)
+
+            self.load_goal_layout(self.goal_3_frame)
+            self.goal_3_frame.grid(row=3, column=6, columnspan=3)
         elif 10 == col_index:
-            self.goal_4_button.destroy()
+            self.goal_4_new.destroy()
             self.goal_4_frame = tk.Frame(self)
 
             self.goal_4_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=10))
             self.goal_4_edit['text'] = button_text
             self.goal_4_edit.grid(row=1, column=9, columnspan=3)
 
-        self.grid_columnconfigure(col_index-1, weight=1, uniform='')
-        self.grid_columnconfigure(col_index, weight=1, uniform='')
-        self.grid_columnconfigure(col_index+1, weight=1, uniform='')
+            self.load_goal_layout(self.goal_4_frame)
+            self.goal_4_frame.grid(row=3, column=9, columnspan=3)
 
-        self.load_goal_layout(0, self.goal_1_frame, self.goal_dialog.get_goal_config())
+    def load_goal_layout(self, frame):
+        goal_data = self.goal_dialog.get_goal_config()
 
-        self.goal_1_frame.grid(row=3, column=0, columnspan=3)
-
-    def load_goal_layout(self, column, frame, goal_data):
         title = tk.Label(frame)
         title['text'] = 'Goal: ' + goal_data['name']
         title.grid(row=0, column=0, pady=5)
@@ -91,6 +97,7 @@ class GoalSetting(tk.Frame):
         deadline.grid(row=1, column=0, pady=5)
 
         for index, item in enumerate(goal_data['results'], start=1):
+            """Allowing access to the index for text and positioning use."""
             result = tk.Label(frame)
             result['text'] = str(index) + '. ' + item
             result.grid(row=index+1, column=0, pady=5)

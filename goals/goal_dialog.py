@@ -4,6 +4,7 @@ import tkinter as tk
 
 class GoalDialog(tk.simpledialog.Dialog):
     def body(self, master=None):
+        parent_window = self._nametowidget('.!mainapp.!goalsetting')
         self.input_padding = 2
         
         self.goal_config = {}

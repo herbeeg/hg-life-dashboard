@@ -8,8 +8,6 @@ class GoalSetting(tk.Frame):
         super().__init__(master)
         self.master = master
 
-        self.editing_goal = False
-
         self.create_widgets()
 
     def create_widgets(self):
@@ -41,7 +39,7 @@ class GoalSetting(tk.Frame):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
 
     def generate_goal_layout(self, col_index):
-        self.goal_dialog = GoalDialog(self.master)
+        self.goal_dialog = GoalDialog(self.master, title='Edit Goal')
         """Wait for user to fill in the dialog options or cancel the operation."""
 
         if not self.goal_dialog.get_goal_config():
@@ -90,8 +88,6 @@ class GoalSetting(tk.Frame):
             self.load_goal_layout(self.goal_4_frame)
             self.goal_4_frame.grid(row=3, column=9, columnspan=3)
 
-        self.editing_goal = False
-
     def load_goal_layout(self, frame):
         goal_data = self.goal_dialog.get_goal_config()
 
@@ -111,20 +107,12 @@ class GoalSetting(tk.Frame):
 
     def edit_goal_layout(self, col_index):
         if 1 == col_index:
-            for widget in self.goal_1_frame.winfo_children():
-                print(widget['text'])
+            self.goal_state = self.goal_1_frame.winfo_children()
         elif 4 == col_index:
-            for widget in self.goal_2_frame.winfo_children():
-                print(widget['text'])
+            self.goal_state = self.goal_1_frame.winfo_children()
         elif 7 == col_index:
-            for widget in self.goal_3_frame.winfo_children():
-                print(widget['text'])
+            self.goal_state = self.goal_1_frame.winfo_children()
         elif 10 == col_index:
-            for widget in self.goal_4_frame.winfo_children():
-                print(widget['text'])
+            self.goal_state = self.goal_1_frame.winfo_children()
 
-        self.editing_goal = True
         self.generate_goal_layout(col_index)
-
-    def maybe_editing_goal(self):
-        return self.editing_goal

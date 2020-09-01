@@ -8,6 +8,8 @@ class GoalSetting(tk.Frame):
         super().__init__(master)
         self.master = master
 
+        self.goal_state = {}
+
         self.create_widgets()
 
     def create_widgets(self):
@@ -102,17 +104,20 @@ class GoalSetting(tk.Frame):
         for index, item in enumerate(goal_data['results'], start=1):
             """Allowing access to the index for text and positioning use."""
             result = tk.Label(frame)
-            result['text'] = str(index) + '. ' + item
+            result['text'] = item
             result.grid(row=index+1, column=0, pady=5)
 
     def edit_goal_layout(self, col_index):
         if 1 == col_index:
             self.goal_state = self.goal_1_frame.winfo_children()
         elif 4 == col_index:
-            self.goal_state = self.goal_1_frame.winfo_children()
+            self.goal_state = self.goal_2_frame.winfo_children()
         elif 7 == col_index:
-            self.goal_state = self.goal_1_frame.winfo_children()
+            self.goal_state = self.goal_3_frame.winfo_children()
         elif 10 == col_index:
-            self.goal_state = self.goal_1_frame.winfo_children()
+            self.goal_state = self.goal_4_frame.winfo_children()
 
         self.generate_goal_layout(col_index)
+
+    def get_goal_state(self):
+        return self.goal_state

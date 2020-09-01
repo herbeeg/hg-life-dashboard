@@ -1,12 +1,28 @@
+import json
+import os
 import tkinter as tk
 
 from .goal_dialog import GoalDialog
 from functools import partial
 
 class GoalSetting(tk.Frame):
+    """
+    Allowing users to create up to four goals which 
+    can be edited via a simple custom dialog box, 
+    allowing for name, deadline and key result 
+    updates.
+
+    Extends the tkinter Frame class.
+    """
     def __init__(self, master=None):
+        """
+        Args:
+            master (Tk, optional): The parent tkinter window element. Defaults to None.
+        """
         super().__init__(master)
         self.master = master
+
+        self.data_directory = '/goals/data/goals.json'
 
         self.editing_goal = False
         self.goal_state = {}
@@ -40,6 +56,8 @@ class GoalSetting(tk.Frame):
 
         for col in range(12):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
+        
+        self.maybe_load_goals()
 
     def generate_goal_layout(self, col_index, new_goal=True):
         if new_goal:
@@ -144,3 +162,25 @@ class GoalSetting(tk.Frame):
 
     def get_goal_state(self):
         return self.goal_state
+
+    def maybe_load_goals(self):
+        try:
+            with open(self.master.get_working_directory() + self.data_directory) as file:
+                filename, file_extension = os.path.splitext(file.name)
+        except FileNotFoundError:
+            tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
+            """The user can continue to create new goals no local data is required."""
+            
+            return
+
+        if filename:
+            filename += file_extension
+
+            try:
+                if '.json' != file_extension:
+                    raise TypeError('Invalid file extension %s' % file_extension)
+
+                with open(filename) as file:
+                    json_data = json.load(file)
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)

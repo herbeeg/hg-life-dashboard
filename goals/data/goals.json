@@ -1,0 +1,38 @@
+{
+    "goal_1_frame": {
+        "name": "Goal 1: A",
+        "date": "01/01/2021",
+        "results": [
+            "Result 1",
+            "Result 2",
+            "Result 3"
+        ]
+    },
+    "goal_2_frame": {
+        "name": "Goal 2: B",
+        "date": "02/02/2022",
+        "results": [
+            "Result 4",
+            "Result 5",
+            "Result 6"
+        ]
+    },
+    "goal_3_frame": {
+        "name": "Goal 3: C",
+        "date": "03/03/2023",
+        "results": [
+            "Result 7",
+            "Result 8",
+            "Result 9"
+        ]
+    },
+    "goal_4_frame": {
+        "name": "Goal 4: D",
+        "date": "04/04/2024",
+        "results": [
+            "Result 10",
+            "Result 11",
+            "Result 12"
+        ]
+    }
+}

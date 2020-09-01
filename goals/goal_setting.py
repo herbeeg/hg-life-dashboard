@@ -8,6 +8,7 @@ class GoalSetting(tk.Frame):
         super().__init__(master)
         self.master = master
 
+        self.editing_goal = False
         self.goal_state = {}
 
         self.create_widgets()
@@ -40,7 +41,10 @@ class GoalSetting(tk.Frame):
         for col in range(12):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
 
-    def generate_goal_layout(self, col_index):
+    def generate_goal_layout(self, col_index, new_goal=True):
+        if new_goal:
+            self.goal_state = {}
+
         self.goal_dialog = GoalDialog(self.master, title='Edit Goal')
         """Wait for user to fill in the dialog options or cancel the operation."""
 
@@ -51,6 +55,10 @@ class GoalSetting(tk.Frame):
 
         if 1 == col_index:
             self.goal_1_new.destroy()
+
+            if self.editing_goal:
+                self.goal_1_frame.destroy()
+            
             self.goal_1_frame = tk.Frame(self)
 
             self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
@@ -61,6 +69,10 @@ class GoalSetting(tk.Frame):
             self.goal_1_frame.grid(row=3, column=0, columnspan=3)
         elif 4 == col_index:
             self.goal_2_new.destroy()
+
+            if self.editing_goal:
+                self.goal_2_frame.destroy()
+            
             self.goal_2_frame = tk.Frame(self)
 
             self.goal_2_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=4))
@@ -71,6 +83,10 @@ class GoalSetting(tk.Frame):
             self.goal_2_frame.grid(row=3, column=3, columnspan=3)
         elif 7 == col_index:
             self.goal_3_new.destroy()
+
+            if self.editing_goal:
+                self.goal_3_frame.destroy()
+            
             self.goal_3_frame = tk.Frame(self)
 
             self.goal_3_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=7))
@@ -81,6 +97,10 @@ class GoalSetting(tk.Frame):
             self.goal_3_frame.grid(row=3, column=6, columnspan=3)
         elif 10 == col_index:
             self.goal_4_new.destroy()
+
+            if self.editing_goal:
+                self.goal_4_frame.destroy()
+            
             self.goal_4_frame = tk.Frame(self)
 
             self.goal_4_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=10))
@@ -89,6 +109,8 @@ class GoalSetting(tk.Frame):
 
             self.load_goal_layout(self.goal_4_frame)
             self.goal_4_frame.grid(row=3, column=9, columnspan=3)
+
+        self.editing_goal = False
 
     def load_goal_layout(self, frame):
         goal_data = self.goal_dialog.get_goal_config()
@@ -117,7 +139,8 @@ class GoalSetting(tk.Frame):
         elif 10 == col_index:
             self.goal_state = self.goal_4_frame.winfo_children()
 
-        self.generate_goal_layout(col_index)
+        self.editing_goal = True
+        self.generate_goal_layout(col_index, False)
 
     def get_goal_state(self):
         return self.goal_state

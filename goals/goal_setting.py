@@ -94,11 +94,11 @@ class GoalSetting(tk.Frame):
         goal_data = self.goal_dialog.get_goal_config()
 
         title = tk.Label(frame)
-        title['text'] = 'Goal: ' + goal_data['name']
+        title['text'] = goal_data['name']
         title.grid(row=0, column=0, pady=5)
 
         deadline = tk.Label(frame)
-        deadline['text'] = 'Deadline: ' + goal_data['date']
+        deadline['text'] = goal_data['date']
         deadline.grid(row=1, column=0, pady=5)
 
         for index, item in enumerate(goal_data['results'], start=1):

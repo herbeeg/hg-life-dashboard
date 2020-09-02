@@ -3,6 +3,7 @@ import os
 import tkinter as tk
 
 from .goal_dialog import GoalDialog
+from.goal_frame import GoalFrame
 from functools import partial
 
 class GoalSetting(tk.Frame):
@@ -56,18 +57,19 @@ class GoalSetting(tk.Frame):
 
         for col in range(12):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
-        
+
         self.maybe_load_goals()
 
-    def generate_goal_layout(self, col_index, new_goal=True):
+    def generate_goal_layout(self, col_index, new_goal=True, bypass_dialog=False):
         if new_goal:
             self.goal_state = {}
 
-        self.goal_dialog = GoalDialog(self.master, title='Edit Goal')
-        """Wait for user to fill in the dialog options or cancel the operation."""
+        if not bypass_dialog:
+            self.goal_dialog = GoalDialog(self.master, title='Edit Goal')
+            """Wait for user to fill in the dialog options or cancel the operation."""
 
-        if not self.goal_dialog.get_goal_config():
-            return
+            if not self.goal_dialog.get_goal_config():
+                return
 
         button_text = 'Edit Goal'
 
@@ -77,7 +79,7 @@ class GoalSetting(tk.Frame):
             if self.editing_goal:
                 self.goal_1_frame.destroy()
             
-            self.goal_1_frame = tk.Frame(self)
+            self.goal_1_frame = GoalFrame(self, 'goal_1_frame')
 
             self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
             self.goal_1_edit['text'] = button_text
@@ -91,7 +93,7 @@ class GoalSetting(tk.Frame):
             if self.editing_goal:
                 self.goal_2_frame.destroy()
             
-            self.goal_2_frame = tk.Frame(self)
+            self.goal_2_frame = GoalFrame(self, 'goal_2_frame')
 
             self.goal_2_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=4))
             self.goal_2_edit['text'] = button_text
@@ -105,7 +107,7 @@ class GoalSetting(tk.Frame):
             if self.editing_goal:
                 self.goal_3_frame.destroy()
             
-            self.goal_3_frame = tk.Frame(self)
+            self.goal_3_frame = GoalFrame(self, 'goal_3_frame')
 
             self.goal_3_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=7))
             self.goal_3_edit['text'] = button_text
@@ -119,7 +121,7 @@ class GoalSetting(tk.Frame):
             if self.editing_goal:
                 self.goal_4_frame.destroy()
             
-            self.goal_4_frame = tk.Frame(self)
+            self.goal_4_frame = GoalFrame(self, 'goal_4_frame')
 
             self.goal_4_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=10))
             self.goal_4_edit['text'] = button_text
@@ -131,7 +133,13 @@ class GoalSetting(tk.Frame):
         self.editing_goal = False
 
     def load_goal_layout(self, frame):
-        goal_data = self.goal_dialog.get_goal_config()
+        if hasattr(self, 'json_data'):
+            if self.json_data[frame.get_name()]:
+                goal_data = self.json_data[frame.get_name()]
+            else:
+                return
+        else: 
+            goal_data = self.goal_dialog.get_goal_config()
 
         title = tk.Label(frame)
         title['text'] = goal_data['name']
@@ -158,7 +166,7 @@ class GoalSetting(tk.Frame):
             self.goal_state = self.goal_4_frame.winfo_children()
 
         self.editing_goal = True
-        self.generate_goal_layout(col_index, False)
+        self.generate_goal_layout(col_index, new_goal=False)
 
     def get_goal_state(self):
         return self.goal_state
@@ -181,6 +189,18 @@ class GoalSetting(tk.Frame):
                     raise TypeError('Invalid file extension %s' % file_extension)
 
                 with open(filename) as file:
-                    json_data = json.load(file)
+                    self.json_data = json.load(file)
+
+                    if self.json_data['goal_1_frame']:
+                        self.generate_goal_layout(1, bypass_dialog=True)
+                    if self.json_data['goal_2_frame']:
+                        self.generate_goal_layout(4, bypass_dialog=True)
+                    if self.json_data['goal_3_frame']:
+                        self.generate_goal_layout(7, bypass_dialog=True)
+                    if self.json_data['goal_4_frame']:
+                        self.generate_goal_layout(10, bypass_dialog=True)
+
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
+
+        delattr(self, 'json_data')

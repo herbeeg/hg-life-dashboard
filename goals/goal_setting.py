@@ -155,6 +155,8 @@ class GoalSetting(tk.Frame):
             result['text'] = item
             result.grid(row=index+1, column=0, pady=5)
 
+        self.save_goal_data(frame.get_name(), goal_data)
+
     def edit_goal_layout(self, col_index):
         if 1 == col_index:
             self.goal_state = self.goal_1_frame.winfo_children()
@@ -204,3 +206,47 @@ class GoalSetting(tk.Frame):
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
         delattr(self, 'json_data')
+
+    def save_goal_data(self, name, data={}):
+        try:
+            with open(self.master.get_working_directory() + self.data_directory) as file:
+                filename, file_extension = os.path.splitext(file.name)
+        except FileNotFoundError:
+            tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
+            """The user can continue to create new goals no local data is required."""
+            
+            return
+
+        if filename:
+            filename += file_extension
+
+            try:
+                if '.json' != file_extension:
+                    raise TypeError('Invalid file extension %s' % file_extension)
+
+                with open(filename) as file:
+                    json_import = json.load(file)
+
+                    if json_import[name] or {} == json_import[name]:
+                        json_import[name] = data
+                        self.write_to_file(json.dumps(json_import))
+
+            except Exception as ex:
+                tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
+
+    def write_to_file(self, encoded_json):
+        """
+        The JSON gets condensed down into a single line 
+        but retains the whitespace to maintain some
+        readability as required.
+
+        Args:
+            encoded_json (str): Compressed JSON data
+        """
+        try:
+            with open(self.master.get_working_directory() + self.data_directory, 'w+') as json_file:
+                file_contents = encoded_json
+                json_file.write(file_contents)
+                json_file.close()
+        except Exception as ex:
+            tk.messagebox.showerror(title='Error Saving Data', message='Unable to save file %s' % json_file.name)

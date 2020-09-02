@@ -28,27 +28,27 @@ class GoalSetting(tk.Frame):
         self.editing_goal = False
         self.goal_state = {}
 
-        self.create_widgets()
+        self.createWidgets()
 
-    def create_widgets(self):
+    def createWidgets(self):
         top_padding = tk.Label(self, text='')
         top_padding.grid(row=0, column=0, columnspan=12, pady=10)
 
         button_text = 'New Goal'
 
-        self.goal_1_new = tk.Button(self, command=partial(self.generate_goal_layout, col_index=1))
+        self.goal_1_new = tk.Button(self, command=partial(self.generateGoalLayout, col_index=1))
         self.goal_1_new['text'] = button_text
         self.goal_1_new.grid(row=1, column=1, sticky='NSEW')
 
-        self.goal_2_new = tk.Button(self, command=partial(self.generate_goal_layout, col_index=4))
+        self.goal_2_new = tk.Button(self, command=partial(self.generateGoalLayout, col_index=4))
         self.goal_2_new['text'] = button_text
         self.goal_2_new.grid(row=1, column=4, sticky='NSEW')
 
-        self.goal_3_new = tk.Button(self, command=partial(self.generate_goal_layout, col_index=7))
+        self.goal_3_new = tk.Button(self, command=partial(self.generateGoalLayout, col_index=7))
         self.goal_3_new['text'] = button_text
         self.goal_3_new.grid(row=1, column=7, sticky='NSEW')
 
-        self.goal_4_new = tk.Button(self, command=partial(self.generate_goal_layout, col_index=10))
+        self.goal_4_new = tk.Button(self, command=partial(self.generateGoalLayout, col_index=10))
         self.goal_4_new['text'] = button_text
         self.goal_4_new.grid(row=1, column=10, sticky='NSEW')
 
@@ -58,9 +58,9 @@ class GoalSetting(tk.Frame):
         for col in range(12):
             self.grid_columnconfigure(col, weight=1, uniform='goals')
 
-        self.maybe_load_goals()
+        self.maybeLoadGoals()
 
-    def generate_goal_layout(self, col_index, new_goal=True, bypass_dialog=False):
+    def generateGoalLayout(self, col_index, new_goal=True, bypass_dialog=False):
         if new_goal:
             self.goal_state = {}
 
@@ -68,7 +68,7 @@ class GoalSetting(tk.Frame):
             self.goal_dialog = GoalDialog(self.master, title='Edit Goal')
             """Wait for user to fill in the dialog options or cancel the operation."""
 
-            if not self.goal_dialog.get_goal_config():
+            if not self.goal_dialog.getGoalConfig():
                 return
 
         button_text = 'Edit Goal'
@@ -81,11 +81,11 @@ class GoalSetting(tk.Frame):
             
             self.goal_1_frame = GoalFrame(self, 'goal_1_frame')
 
-            self.goal_1_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=1))
+            self.goal_1_edit = tk.Button(self, command=partial(self.editGoalLayout, col_index=1))
             self.goal_1_edit['text'] = button_text
             self.goal_1_edit.grid(row=1, column=0, columnspan=3)
 
-            self.load_goal_layout(self.goal_1_frame)
+            self.loadGoalLayout(self.goal_1_frame)
             self.goal_1_frame.grid(row=3, column=0, columnspan=3)
         elif 4 == col_index:
             self.goal_2_new.destroy()
@@ -95,11 +95,11 @@ class GoalSetting(tk.Frame):
             
             self.goal_2_frame = GoalFrame(self, 'goal_2_frame')
 
-            self.goal_2_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=4))
+            self.goal_2_edit = tk.Button(self, command=partial(self.editGoalLayout, col_index=4))
             self.goal_2_edit['text'] = button_text
             self.goal_2_edit.grid(row=1, column=3, columnspan=3)
 
-            self.load_goal_layout(self.goal_2_frame)
+            self.loadGoalLayout(self.goal_2_frame)
             self.goal_2_frame.grid(row=3, column=3, columnspan=3)
         elif 7 == col_index:
             self.goal_3_new.destroy()
@@ -109,11 +109,11 @@ class GoalSetting(tk.Frame):
             
             self.goal_3_frame = GoalFrame(self, 'goal_3_frame')
 
-            self.goal_3_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=7))
+            self.goal_3_edit = tk.Button(self, command=partial(self.editGoalLayout, col_index=7))
             self.goal_3_edit['text'] = button_text
             self.goal_3_edit.grid(row=1, column=6, columnspan=3)
 
-            self.load_goal_layout(self.goal_3_frame)
+            self.loadGoalLayout(self.goal_3_frame)
             self.goal_3_frame.grid(row=3, column=6, columnspan=3)
         elif 10 == col_index:
             self.goal_4_new.destroy()
@@ -123,23 +123,23 @@ class GoalSetting(tk.Frame):
             
             self.goal_4_frame = GoalFrame(self, 'goal_4_frame')
 
-            self.goal_4_edit = tk.Button(self, command=partial(self.edit_goal_layout, col_index=10))
+            self.goal_4_edit = tk.Button(self, command=partial(self.editGoalLayout, col_index=10))
             self.goal_4_edit['text'] = button_text
             self.goal_4_edit.grid(row=1, column=9, columnspan=3)
 
-            self.load_goal_layout(self.goal_4_frame)
+            self.loadGoalLayout(self.goal_4_frame)
             self.goal_4_frame.grid(row=3, column=9, columnspan=3)
 
         self.editing_goal = False
 
-    def load_goal_layout(self, frame):
+    def loadGoalLayout(self, frame):
         if hasattr(self, 'json_data'):
-            if self.json_data[frame.get_name()]:
-                goal_data = self.json_data[frame.get_name()]
+            if self.json_data[frame.getName()]:
+                goal_data = self.json_data[frame.getName()]
             else:
                 return
         else: 
-            goal_data = self.goal_dialog.get_goal_config()
+            goal_data = self.goal_dialog.getGoalConfig()
 
         title = tk.Label(frame)
         title['text'] = goal_data['name']
@@ -155,9 +155,9 @@ class GoalSetting(tk.Frame):
             result['text'] = item
             result.grid(row=index+1, column=0, pady=5)
 
-        self.save_goal_data(frame.get_name(), goal_data)
+        self.saveGoalData(frame.getName(), goal_data)
 
-    def edit_goal_layout(self, col_index):
+    def editGoalLayout(self, col_index):
         if 1 == col_index:
             self.goal_state = self.goal_1_frame.winfo_children()
         elif 4 == col_index:
@@ -168,14 +168,14 @@ class GoalSetting(tk.Frame):
             self.goal_state = self.goal_4_frame.winfo_children()
 
         self.editing_goal = True
-        self.generate_goal_layout(col_index, new_goal=False)
+        self.generateGoalLayout(col_index, new_goal=False)
 
-    def get_goal_state(self):
+    def getGoalState(self):
         return self.goal_state
 
-    def maybe_load_goals(self):
+    def maybeLoadGoals(self):
         try:
-            with open(self.master.get_working_directory() + self.data_directory) as file:
+            with open(self.master.getWorkingDirectory() + self.data_directory) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
             tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
@@ -194,22 +194,22 @@ class GoalSetting(tk.Frame):
                     self.json_data = json.load(file)
 
                     if self.json_data['goal_1_frame']:
-                        self.generate_goal_layout(1, bypass_dialog=True)
+                        self.generateGoalLayout(1, bypass_dialog=True)
                     if self.json_data['goal_2_frame']:
-                        self.generate_goal_layout(4, bypass_dialog=True)
+                        self.generateGoalLayout(4, bypass_dialog=True)
                     if self.json_data['goal_3_frame']:
-                        self.generate_goal_layout(7, bypass_dialog=True)
+                        self.generateGoalLayout(7, bypass_dialog=True)
                     if self.json_data['goal_4_frame']:
-                        self.generate_goal_layout(10, bypass_dialog=True)
+                        self.generateGoalLayout(10, bypass_dialog=True)
 
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
         delattr(self, 'json_data')
 
-    def save_goal_data(self, name, data={}):
+    def saveGoalData(self, name, data={}):
         try:
-            with open(self.master.get_working_directory() + self.data_directory) as file:
+            with open(self.master.getWorkingDirectory() + self.data_directory) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
             tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
@@ -229,12 +229,12 @@ class GoalSetting(tk.Frame):
 
                     if json_import[name] or {} == json_import[name]:
                         json_import[name] = data
-                        self.write_to_file(json.dumps(json_import))
+                        self.writeToFile(json.dumps(json_import))
 
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
-    def write_to_file(self, encoded_json):
+    def writeToFile(self, encoded_json):
         """
         The JSON gets condensed down into a single line 
         but retains the whitespace to maintain some
@@ -244,7 +244,7 @@ class GoalSetting(tk.Frame):
             encoded_json (str): Compressed JSON data
         """
         try:
-            with open(self.master.get_working_directory() + self.data_directory, 'w+') as json_file:
+            with open(self.master.getWorkingDirectory() + self.data_directory, 'w+') as json_file:
                 file_contents = encoded_json
                 json_file.write(file_contents)
                 json_file.close()

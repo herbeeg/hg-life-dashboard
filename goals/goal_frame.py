@@ -7,5 +7,5 @@ class GoalFrame(tk.Frame):
 
         self.name = name
 
-    def get_name(self):
+    def getName(self):
         return self.name

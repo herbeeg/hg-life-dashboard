@@ -34,7 +34,7 @@ class MainApp(tk.Frame):
         self.main.pack()
         self.pack()
 
-    def load_view(self, view = 'menu'):
+    def loadView(self, view = 'menu'):
         """
         Switches out the container view based on
         what element of the application we 
@@ -43,40 +43,40 @@ class MainApp(tk.Frame):
         Args:
             view (str, optional): Container codename to load. Defaults to 'menu'.
         """
-        self.clear_view()
+        self.clearView()
 
         if 'menu' == view:
             self.master.title('Menu - ' + self.window_title)
 
             self.main = main.MainMenu(self)
             self.main.pack()
-            self.detach_back_button()
+            self.detachBackButton()
         elif 'xeffect' == view:
             self.master.title('X-Effect - ' + self.window_title)
             
             self.xeffect = xeffect.XEffect(self)
             self.xeffect.pack()
-            self.attach_back_button()
+            self.attachBackButton()
         elif 'goals' == view:
             self.master.title('Goal Setting - ' + self.window_title)
 
             self.goals = goals.GoalSetting(self)
             self.goals.pack()
-            self.attach_back_button()
+            self.attachBackButton()
         elif 'schedule' == view:
             self.master.title('Schedule - ' + self.window_title)
 
             self.schedule = schedule.Schedule(self)
             self.schedule.pack()
-            self.attach_back_button()
+            self.attachBackButton()
         elif 'journal' == view:
             self.master.title('Journal - ' + self.window_title)
 
             self.journal = journal.Journal(self)
             self.journal.pack()
-            self.attach_back_button()
+            self.attachBackButton()
 
-    def clear_view(self):
+    def clearView(self):
         """
         Destroy all elements in the current frame
         so that we can prepare the element to
@@ -85,18 +85,18 @@ class MainApp(tk.Frame):
         for widget in self.winfo_children():
             widget.destroy()
 
-    def attach_back_button(self):
+    def attachBackButton(self):
         """
         Create a new, absolutely positioned back button
         element to the root frame and anchor it to
         the top-left of the window.
         """
-        self.menu_back = tk.Button(self.master, padx=10, pady=5, command=partial(self.load_view, 'menu'))
+        self.menu_back = tk.Button(self.master, padx=10, pady=5, command=partial(self.loadView, 'menu'))
         self.menu_back['text'] = '<-- Back'
         self.menu_back.pack()
         self.menu_back.place(anchor='nw', x=10)
 
-    def detach_back_button(self):
+    def detachBackButton(self):
         """
         As the back button is attached to the root
         frame, the element will be destroyed
@@ -105,7 +105,7 @@ class MainApp(tk.Frame):
         if hasattr(self, 'menu_back') and None != self.menu_back:
             self.menu_back.destroy()
 
-    def get_working_directory(self):
+    def getWorkingDirectory(self):
         """
         Used throughout the entire application to
         reference any local directories for

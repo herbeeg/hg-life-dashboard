@@ -45,15 +45,15 @@ class ScheduleGenerator(tk.Frame):
                 'end': self.hour_end
             }
             
-            for day in self.column_titles():
+            for day in self.columnTitles():
                 self.grid_data.update({day:{'data':{}}})
 
                 for hour in list(range(self.hour_start, self.hour_end)):
                     self.grid_data[day]['data'].update({str(hour):''})
 
-        self.create_widgets()
+        self.createWidgets()
 
-    def create_widgets(self):
+    def createWidgets(self):
         """
         Render the schedule grid as clickable Label text 
         containers, that allow the user to edit
@@ -76,7 +76,7 @@ class ScheduleGenerator(tk.Frame):
         self.row_index = 0
         self.col_index += 1
         
-        for day in self.column_titles():
+        for day in self.columnTitles():
             day_title = tk.Label(self, width=15, padx=self.frame_padding)
             day_title['text'] = day.title()
             day_title.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
@@ -88,7 +88,7 @@ class ScheduleGenerator(tk.Frame):
                 hour_area['text'] = self.grid_data[day]['data'][str(hour)]
                 hour_area.grid(row=self.row_index, column=self.col_index, sticky='NSEW')
 
-                hour_area.bind('<Button-1>', partial(self.master.edit_schedule, label_object=hour_area, day=day, hour=hour))
+                hour_area.bind('<Button-1>', partial(self.master.editSchedule, label_object=hour_area, day=day, hour=hour))
                 """We're able to make use of the partial() function to pass keyword arguments as required."""
 
                 self.row_index += 1
@@ -96,7 +96,7 @@ class ScheduleGenerator(tk.Frame):
             self.row_index = 0
             self.col_index += 1
 
-    def column_titles(self):
+    def columnTitles(self):
         """
         We convert these values to title case when
         printing them out at the top of each
@@ -115,7 +115,7 @@ class ScheduleGenerator(tk.Frame):
             'sunday'
         ]
 
-    def store_data(self, json_string):
+    def storeData(self, json_string):
         """
         We use this data locally when making edit
         operations to the schedule grid and
@@ -126,7 +126,7 @@ class ScheduleGenerator(tk.Frame):
         """
         self.grid_data = json_string
 
-    def get_data(self):
+    def getData(self):
         """
         Getter for readability when the Schedule()
         class makes any references.

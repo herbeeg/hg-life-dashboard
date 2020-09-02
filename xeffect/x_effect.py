@@ -44,10 +44,10 @@ class XEffect(tk.Frame):
         self.search_filename = AppConstants.filePreface() + self.current_month_year.replace(' ', '_') + '.json'
         """Calendar and date conversion for dynamic filename loading and title."""
 
-        self.print_calendar_title(self.current_month_year.title())
-        self.xeffect_data = self.load_xeffect_data()
+        self.printCalendarTitle(self.current_month_year.title())
+        self.xeffect_data = self.loadXeffectData()
 
-    def create_widget(self, widget_item={}):
+    def createWidget(self, widget_item={}):
         """
         Each item group is classed as a widget, with their
         own titles, colours and rows of data.
@@ -77,7 +77,7 @@ class XEffect(tk.Frame):
             self.col_index += 1
 
             for count in range(len(self.calendar)):
-                checkbox = tk.Checkbutton(self, command=partial(self.save_xeffect_data, parent=data['title'], index=(count + 1)))
+                checkbox = tk.Checkbutton(self, command=partial(self.saveXeffectData, parent=data['title'], index=(count + 1)))
                 """We can track the unique title and checkbox index individually by passing them as parameters to the callable function when clicked."""
                 checkbox.grid(row=self.row_index, column=self.col_index)
 
@@ -90,7 +90,7 @@ class XEffect(tk.Frame):
             self.row_index += 1
             self.col_index = 0
 
-    def load_xeffect_data(self):
+    def loadXeffectData(self):
         """
         If the provided file naming convention does not match
         anything in the given directory, then the user is
@@ -112,7 +112,7 @@ class XEffect(tk.Frame):
             dict: The JSON file contents, converted.
         """
         try:
-            with open(self.master.get_working_directory() + self.data_directory + self.search_filename) as file:
+            with open(self.master.getWorkingDirectory() + self.data_directory + self.search_filename) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
             try:
@@ -120,7 +120,7 @@ class XEffect(tk.Frame):
             except TypeError as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='No valid file selected')
 
-                self.master.load_view('menu')
+                self.master.loadView('menu')
                 """Return to the main menu if there is a problem while loading a file."""
                 return
 
@@ -134,10 +134,10 @@ class XEffect(tk.Frame):
                 with open(filename) as file:
                     json_data = json.load(file)
 
-                    self.print_calendar_dates(self.calendar)
+                    self.printCalendarDates(self.calendar)
 
                     for item in json_data['items']:
-                        self.create_widget(item)
+                        self.createWidget(item)
 
                     self.finished_loading = True
             except Exception as ex:
@@ -145,7 +145,7 @@ class XEffect(tk.Frame):
 
         return json_data
 
-    def save_xeffect_data(self, parent, index):
+    def saveXeffectData(self, parent, index):
         """
         The loaded JSON data is stored locally so we're
         just able to reference the class variable
@@ -172,9 +172,9 @@ class XEffect(tk.Frame):
                         data['checked'].append(index)
                         data['checked'].sort()
 
-                    self.write_to_file(json.dumps(self.xeffect_data))
+                    self.writeToFile(json.dumps(self.xeffect_data))
 
-    def write_to_file(self, encoded_json):
+    def writeToFile(self, encoded_json):
         """
         The JSON gets condensed down into a single line 
         but retains the whitespace to maintain some
@@ -184,14 +184,14 @@ class XEffect(tk.Frame):
             encoded_json (str): Compressed JSON data
         """
         try:
-            with open(self.master.get_working_directory() + self.data_directory + self.search_filename, 'w+') as json_file:
+            with open(self.master.getWorkingDirectory() + self.data_directory + self.search_filename, 'w+') as json_file:
                 file_contents = encoded_json
                 json_file.write(file_contents)
                 json_file.close()
         except Exception as ex:
             tk.messagebox.showerror(title='Error Saving Data', message='Unable to save file %s' % json_file.name)
 
-    def print_calendar_dates(self, dates):
+    def printCalendarDates(self, dates):
         """
         Render out the calendar dates at the top of the
         grid layout, ensuring that the number of
@@ -211,7 +211,7 @@ class XEffect(tk.Frame):
         self.row_index += 1
         self.col_index = 0
 
-    def print_calendar_title(self, title):
+    def printCalendarTitle(self, title):
         """
         The calendar title needs to stretch across the entirity
         of the container so it can be centered correctly

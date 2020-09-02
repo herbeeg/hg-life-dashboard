@@ -31,9 +31,9 @@ class Schedule(tk.Frame):
         self.frame_padding = 10
         self.button_padding = 30
 
-        self.create_widgets()
+        self.createWidgets()
 
-    def create_widgets(self):
+    def createWidgets(self):
         """
         Render all of the generation input options
         in a separate frame, allowing us to
@@ -66,20 +66,20 @@ class Schedule(tk.Frame):
         self.end_time_input = tk.OptionMenu(self.generation_options, self.day_end, *hours)
         self.end_time_input.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.generate_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.generate_week_schedule)
+        self.generate_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.generateWeekSchedule)
         self.generate_button['text'] = 'Generate'
         self.generate_button.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.save_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.save_schedule)
+        self.save_button = tk.Button(self.generation_options, padx=self.button_padding, command=self.saveSchedule)
         self.save_button['text'] = 'Save'
         self.save_button.pack(side='left', padx=self.frame_padding, pady=self.frame_padding)
 
         self.generation_options.pack(side='top')
         """The options are stuck to the top of the window to ensure the schedule grid renders on the next line(s)."""
 
-        self.json_data = self.maybe_load_schedule()
+        self.json_data = self.maybeLoadSchedule()
 
-    def generate_week_schedule(self, from_file=False):
+    def generateWeekSchedule(self, from_file=False):
         """
         Instantiate a new ScheduleGenerator() object with local
         JSON data if a valid file exists in the requisite
@@ -89,7 +89,7 @@ class Schedule(tk.Frame):
             from_file (bool, optional): True if we want to store loaded data on startup. Defaults to False.
         """
         if hasattr(self, 'schedule_grid'):
-            self.clear_schedule()
+            self.clearSchedule()
             """Only attempt to clear the grid if the frame already exists in the window."""
 
         self.schedule_grid = ScheduleGenerator(self, self.day_start.get(), self.day_end.get(), self.json_data)
@@ -97,9 +97,9 @@ class Schedule(tk.Frame):
         """The schedule is packed separately as it uses the grid() function which is incompatible with pack() when used in the same frame."""
 
         if from_file:
-            self.schedule_grid.store_data(json_string=self.json_data)
+            self.schedule_grid.storeData(json_string=self.json_data)
 
-    def edit_schedule(self, event, label_object, day, hour):
+    def editSchedule(self, event, label_object, day, hour):
         """
         We need to parse the 'event' argument in this function 
         as not doing so will result in issues with the 
@@ -116,12 +116,12 @@ class Schedule(tk.Frame):
 
         label_object['text'] = task
 
-        json = self.schedule_grid.get_data()
+        json = self.schedule_grid.getData()
         json[day]['data'][str(hour)] = task
 
-        self.schedule_grid.store_data(json)
+        self.schedule_grid.storeData(json)
 
-    def save_schedule(self):
+    def saveSchedule(self):
         """
         Write encoded JSON to a specified directory and
         filename whenever the save button is clicked.
@@ -130,10 +130,10 @@ class Schedule(tk.Frame):
             AttributeError: Fail if the grid frame does not already exist in the window
         """
         try:
-            data = self.schedule_grid.get_data()
+            data = self.schedule_grid.getData()
 
             try:
-                with open(self.master.get_working_directory() + self.data_directory, 'w+') as json_file:
+                with open(self.master.getWorkingDirectory() + self.data_directory, 'w+') as json_file:
                     file_contents = json.dumps(data)
                     json_file.write(file_contents)
                     json_file.close()
@@ -142,7 +142,7 @@ class Schedule(tk.Frame):
         except AttributeError:
             tk.messagebox.showerror(title='Error Saving Data', message='Grid schedule has not been generated yet.')
 
-    def maybe_load_schedule(self):
+    def maybeLoadSchedule(self):
         """
         If a valid local JSON file exists, then we use 
         that to generate a new schedule grid with 
@@ -164,7 +164,7 @@ class Schedule(tk.Frame):
             dict: Empty dict object if no valid file exists
         """
         try:
-            with open(self.master.get_working_directory() + self.data_directory) as file:
+            with open(self.master.getWorkingDirectory() + self.data_directory) as file:
                 filename, file_extension = os.path.splitext(file.name)
         except FileNotFoundError:
             tk.messagebox.showwarning(title='Couldn\'t Load Data', message='No valid file found.')
@@ -185,11 +185,11 @@ class Schedule(tk.Frame):
                     self.day_start.set(self.json_data['start'])
                     self.day_end.set(self.json_data['end'])
 
-                    self.generate_week_schedule(from_file=True)
+                    self.generateWeekSchedule(from_file=True)
             except Exception as ex:
                 tk.messagebox.showerror(title='Error Loading Data', message='Unable to open file %s' % filename)
 
-    def clear_schedule(self):
+    def clearSchedule(self):
         """
         When a new schedule grid is generated, we want to
         clear any existing frames in the window before

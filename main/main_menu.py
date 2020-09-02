@@ -24,9 +24,9 @@ class MainMenu(tk.Frame):
         self.frame_padding = 10
         self.button_padding = 50
 
-        self.create_widgets()
+        self.createWidgets()
 
-    def create_widgets(self):
+    def createWidgets(self):
         """
         Render all menu button elements and map their
         commands to the main application's view
@@ -36,18 +36,18 @@ class MainMenu(tk.Frame):
         to allow passing of parameters to button
         command configs.
         """
-        self.goals_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'goals'))
+        self.goals_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.loadView, 'goals'))
         self.goals_open['text'] = 'Goal Setting'
         self.goals_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.journal_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'journal'))
+        self.journal_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.loadView, 'journal'))
         self.journal_open['text'] = 'Journal'
         self.journal_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.schedules_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'schedule'))
+        self.schedules_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.loadView, 'schedule'))
         self.schedules_open['text'] = 'Schedule'
         self.schedules_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)
 
-        self.xeffect_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.load_view, 'xeffect'))
+        self.xeffect_open = tk.Button(self, padx=self.button_padding, command=partial(self.master.loadView, 'xeffect'))
         self.xeffect_open['text'] = 'X-Effect'
         self.xeffect_open.pack(side='top', fill='x', padx=self.frame_padding, pady=self.frame_padding)

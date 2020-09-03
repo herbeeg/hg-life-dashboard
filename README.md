@@ -86,4 +86,36 @@ For example:
 
 ## X-Effect
 
+Allows the user to cross off specific routine tasks for the day that they want to help form more positive habits from.
+
+Heavily based on the 7-week journey of willpower that Reddit users discuss [here](https://www.reddit.com/r/theXeffect/).
+
+![X-Effect preview](/gifs/intro_xeffect_opt_75.gif)
+
+For example:
+
+- Section: Programming
+    - Python
+    - Game development
+    - Personal site development
+- Section: Hobbies
+    - Warhammer
+    - Play guitar
+    - Reading
+
+### Known limitations
+
+1. **Section title and row text cannot be edited through the UI.**
+> Changes to the text can be made by directly editing the local JSON data but this is far from optimal and not obvious to the user. Possibly opening a dialog on click with a simple entry field for text input would suffice here.
+2. **New sections and rows cannot be added through the UI.**
+> Similar to the previous point, the schedule itself is rather rigid in structure. All of the changes that can be made are by directly editing the local JSON data and the constraints are not obvious to anyone other than the developer themselves. A much more flexible UI is needed here to enrich the limited experience.
+3. **When the next month comes, data will not be loaded due to fixed file naming constraints.**
+> 
+4. **Preserving data from previous months is not automated.**
+>
+5. **Styling the grid can only be done via direct edits through the local JSON data.**
+>
+6. **Month progress for each hobby/task is not tracked or displayed in the UI.**
+>
+
 ## Learnings

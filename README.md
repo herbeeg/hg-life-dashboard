@@ -81,6 +81,8 @@ For example:
 > There isn't a lot of flexibility when it comes to dealing with the filesystem. If the specified file doesn't exist, then the user is presented with a generic warning dialog but continues onto the schedule generation phase for the user. From there, it isn't really clear what the user should do next - the presented UI could be a lot clearer or possible scaffold a default empty schedule instead, in this instance.
 3. **Each grid element is limited in what the user can input into it.**
 > The user can only fit two or three words into each scheduled hour before the grid begins to get distorted. Having a title element with a max character limit and a description either on hover or on click might be better for the user here for more clarity.
+4. **Hour representation is not clear enough for users.**
+> Hours in both the grid and the dropdown menus are represented by numbers 0-23 for 00:00 to 23:00 hours. These should be converted accordingly to clear any confusion and formatted better with the grid layout.
 
 ## X-Effect
 

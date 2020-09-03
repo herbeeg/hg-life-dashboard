@@ -24,11 +24,11 @@ Allows the user to set up to four goals which can produce a positive result, by 
 
 For example:
 
-- Goal 1: Purchase Xbox One
-- Deadline: 01/12/20
-- Key Result 1: Find a new full-time job
-- Key Result 2: Move house
-- Key Result 3: Release Bit Battle alpha v0.1
+- *Goal 1: Purchase Xbox One*
+- *Deadline: 01/12/20*
+- *Key Result 1: Find a new full-time job*
+- *Key Result 2: Move house*
+- *Key Result 3: Release Bit Battle alpha v0.1*
 
 ### Known limitations
 
@@ -43,6 +43,25 @@ For example:
 
 ## Journal
 
+Allows the loading, saving and deleting of text files to get thoughts out onto an "electronic" piece of paper.
+
+![Journal preview](/gifs/intro_journal_opt_75.gif)
+
+For example:
+
+*Day 1*
+
+*This is an example journal entry to use during testing.*
+
+*Here's another thing I did that day with special characters!*
+
+### Known limitations
+
+1. **The UI is quite basic.**
+> Maybe that's a good thing as it does exactly what it says on the tin. Two additions could be having a separate title element and including a word count in the UI, just to enrich this element of the application.
+
 ## Schedule
 
 ## X-Effect
+
+## Learnings

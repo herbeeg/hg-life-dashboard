@@ -94,14 +94,14 @@ Heavily based on the 7-week journey of willpower that Reddit users discuss [here
 
 For example:
 
-- Section: Programming
-    - Python
-    - Game development
-    - Personal site development
-- Section: Hobbies
-    - Warhammer
-    - Play guitar
-    - Reading
+- *Section: Programming*
+    - *Python*
+    - *Game development*
+    - *Personal site development*
+- *Section: Hobbies*
+    - *Warhammer*
+    - *Play guitar*
+    - *Reading*
 
 ### Known limitations
 
@@ -110,12 +110,16 @@ For example:
 2. **New sections and rows cannot be added through the UI.**
 > Similar to the previous point, the schedule itself is rather rigid in structure. All of the changes that can be made are by directly editing the local JSON data and the constraints are not obvious to anyone other than the developer themselves. A much more flexible UI is needed here to enrich the limited experience.
 3. **When the next month comes, data will not be loaded due to fixed file naming constraints.**
-> 
+> When the next month turns over, the application will be looking for a file named `ld_MONTH_YEAR.json` and it won't be found unless the user creates a new local file that follows the required naming convention. Instead, the user should be given the option to generate a new grid view that can be changed for the coming month.
 4. **Preserving data from previous months is not automated.**
->
+> When a new month comes around, the previous data should be stored and a new JSON file generated with the correct structure for the user to edit upon opening. It could pull all of the titles and sections from the previous month, under the assumption that the user wants to continue tracking the same thing but that's rather restrictive.
 5. **Styling the grid can only be done via direct edits through the local JSON data.**
->
+> The example data provided forces a certain colour scheme for each section based on a hex colour code that assumes that the user understands this. A colour picker could be implemented where a button is attached to each section group and updated in the local JSON data accordingly.
 6. **Month progress for each hobby/task is not tracked or displayed in the UI.**
->
+> The grid of checkboxes doesn't give a whole lot of feedback to the user about how many times they've completed a task in that month and users like to see statistics. It could also provide a combined percentage or fraction for each section as well, giving more information to the user about what habits they were able to uphold and which ones fell through that month.
+7. **Any data loading errors send the user back to the main menu.**
+> From a usability point of view, this doesn't give a great deal of information to the user about what's wrong. Is there a problem with the data? Is it a new bug in the application? More information and options need to be provided to resolve any sticking points or "loops" like these. 
+8. **Habits/tasks cannot be changed part-way through a single month.**
+> I think this makes sense from a data and continuity point of view. It's far easier to track this and causes all sorts of issues if we have to track multiple renamed tasks on a per-row basis.
 
 ## Learnings

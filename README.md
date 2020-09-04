@@ -125,3 +125,7 @@ For example:
 > I think this makes sense from a data and continuity point of view. It's far easier to track this and causes all sorts of issues if we have to track multiple renamed tasks on a per-row basis.
 
 ## Learnings
+
+I've written a retrospective blog post about what I've learnt from tackling this new project and what I'd improve within the existing codebase and what I'll take with me going forward. You can read more here:
+
+[https://jonherbst.dev/blog/life-dashboard-learnings/](https://jonherbst.dev/blog/life-dashboard-learnings/)
